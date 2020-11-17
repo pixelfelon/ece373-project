@@ -4,7 +4,7 @@ public abstract class Weapon {
 
 	protected int damage;
 	protected int attackSpeed;
-	protected int range;
+	protected double range;
 	private Enemy target;
 
 	public Weapon() {}
@@ -25,11 +25,11 @@ public abstract class Weapon {
 		this.attackSpeed = attackSpeed;
 	}
 
-	public int getRange() {
+	public double getRange() {
 		return this.range;
 	}
 
-	public void setRange(int range) {
+	public void setRange(double range) {
 		this.range = range;
 	}
 

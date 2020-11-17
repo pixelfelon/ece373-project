@@ -25,16 +25,19 @@ public class Game {
 
 	public Game(int planets, GameDifficulty difficulty) {
 		this.difficulty = difficulty;
-
+	
 		this.entities = new HashSet<Entity>();
 		this.enemies = new HashSet<Enemy>();
 		this.planets = new ArrayList<Planet>();
+		
+		RailGun newGun = new RailGun();
 
 		this.sun = new Star();
 		this.entities.add(this.sun);
 
 		for (int i = 0; i < planets; i++) {
 			Planet planet = new Planet(0.3 + 0.5 * ((double)i / (double)planets));
+			planet.setWeapon(newGun); //testing weapon
 			this.planets.add(planet);
 			this.entities.add(planet);
 		}
@@ -69,11 +72,12 @@ public class Game {
 
 
 	private void spawnEnemy() {
-		
+		//TODO do we want the enemies to start outside of the window?
 		int posMin = -1;
 		int posMax = 1;
-		double speedMin = 0.03;
-		double speedMax = 0.08;
+		//speed needs adjusting
+		double speedMin = 0.01;
+		double speedMax = 0.05;
 		
 		double posX = Math.random() * (posMax - posMin + 1) + posMin;
 		double posY = Math.random() * (posMax - posMin + 1) + posMin;
@@ -85,6 +89,10 @@ public class Game {
 			enemy.setSpeed(speed);
 			this.entities.add(enemy);
 			this.enemies.add(enemy);
+			
+			for(Planet p: planets) {
+				p.setEnemy(enemy); //adding potential enemies
+			}
 		}
 	}
 

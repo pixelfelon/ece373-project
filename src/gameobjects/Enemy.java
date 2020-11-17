@@ -6,7 +6,7 @@ public class Enemy extends LivingEntity {
 	private double y;
 	private double speed;
 	private double m;
-
+	
 	public Enemy() {
 		x = 0.0;
 		y = 0.0;
@@ -30,25 +30,15 @@ public class Enemy extends LivingEntity {
 
 	public void tick(double dT) {
 		
-		x = y/m;
-		y = m*x;
-		
-		
 		if (x > 0) {
 			x = (x - dT*speed);
 		}
 		
-		if (x < 0) {
+		else if (x < 0) {
 			x = (x + dT*speed);
 		}
 		
-		if (y > 0) {
-			y = (y - dT*speed);
-		}
-		
-		if (y < 0) {
-			y = (y + dT*speed);
-		}
+		y = m*x;
 		
 		
 		if (-0.02 <= x && x <= 0.02) {
@@ -59,9 +49,11 @@ public class Enemy extends LivingEntity {
 			y = 0.0;
 			this.setHealth(0);
 		}
+		
+		//System.out.println("x: " + x + " y: " + y); //For Testing
+		
 		this.getPosition().setX(x);
 		this.getPosition().setY(y);
-		
 		
 	}
 
