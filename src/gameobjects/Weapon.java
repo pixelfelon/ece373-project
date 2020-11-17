@@ -1,43 +1,44 @@
 package gameobjects;
 
 public abstract class Weapon {
-protected int damage;
-protected int attackSpeed;
-protected int range;
-private Enemy target;
 
-public Weapon() {}
+	protected int damage;
+	protected int attackSpeed;
+	protected int range;
+	private Enemy target;
 
-public int getDamage() {
-	return damage;
-}
+	public Weapon() {}
 
-public void setDamage(int damage) {
-	this.damage = damage;
-}
+	public int getDamage() {
+		return this.damage;
+	}
 
-public int getAttackSpeed() {
-	return attackSpeed;
-}
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
 
-public void setAttackSpeed(int attackSpeed) {
-	this.attackSpeed = attackSpeed;
-}
+	public int getAttackSpeed() {
+		return this.attackSpeed;
+	}
 
-public int getRange() {
-	return range;
-}
+	public void setAttackSpeed(int attackSpeed) {
+		this.attackSpeed = attackSpeed;
+	}
 
-public void setRange(int range) {
-	this.range = range;
-}
+	public int getRange() {
+		return this.range;
+	}
 
-public Enemy getTarget() {
-	return target;
-}
+	public void setRange(int range) {
+		this.range = range;
+	}
 
-public void setTarget(Enemy target) {
-	this.target = target;
-}
+	public Enemy getTarget() {
+		return this.target;
+	}
+
+	public void setTarget(Enemy target) {
+		this.target = target;
+	}
 
 }

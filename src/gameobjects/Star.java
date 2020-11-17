@@ -1,22 +1,25 @@
 package gameobjects;
 
 import  java.util.ArrayList;
-import gameobjects.Planet; 
 
-public class Star extends Entity {
+public class Star extends LivingEntity {
 
-private ArrayList<Planet> planets;
+	private ArrayList<Planet> planets;
 
-public Star() {
-	planets = new ArrayList<Planet>();
-}
+	public Star() {
+		planets = new ArrayList<Planet>();
+	}
 
-public ArrayList<Planet> getPlanets() {
-	return planets;
-}
+	public ArrayList<Planet> getPlanets() {
+		return this.planets;
+	}
 
-public void addPlanet(Planet planet) {
-	this.planets.add(planet);
-}
+	public void addPlanet(Planet planet) {
+		this.planets.add(planet);
+	}
+
+	public void tick(double dT) {
+		// glow
+	}
 
 }
