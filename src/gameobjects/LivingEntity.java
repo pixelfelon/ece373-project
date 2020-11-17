@@ -2,7 +2,7 @@ package gameobjects;
 
 public abstract class LivingEntity extends Entity {
 
-	private int health;
+	protected int health;
 
 	public LivingEntity() {
 		this.health = 100;
@@ -14,9 +14,6 @@ public abstract class LivingEntity extends Entity {
 
 	public void setHealth(int health) {
 		this.health = health;
-		if (this.health <= 0) {
-			this.markReadyToDelete();
-		}
 	}
 
 	public void dealDamage(int damage) {

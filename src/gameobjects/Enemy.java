@@ -1,8 +1,6 @@
 package gameobjects;
 
 public class Enemy extends LivingEntity {
-
-	private int spawnPosition;
 	
 	private double x;
 	private double y;
@@ -16,14 +14,10 @@ public class Enemy extends LivingEntity {
 		m = 0.0;
 	}
 
-	/*public int getSpawnPosition() {
-		return this.spawnPosition;
-	}*/
-
 	public void setSpawnPosition(double x, double y) {
 		this.x = x;
 		this.y = y;
-		m = y/x;
+		this.m = y/x;
 	}
 	
 	public void setSpeed(double speed) {
@@ -41,37 +35,32 @@ public class Enemy extends LivingEntity {
 		
 		
 		if (x > 0) {
-		//	System.out.print(" X postion: " + x);
 			x = (x - dT*speed);
 		}
 		
 		if (x < 0) {
-		//	System.out.print(" X postion: " + x);
 			x = (x + dT*speed);
 		}
 		
 		if (y > 0) {
-		//	System.out.print(" Y postion: " + y);
 			y = (y - dT*speed);
 		}
 		
 		if (y < 0) {
-			//System.out.print(" Y postion: " + y);
 			y = (y + dT*speed);
 		}
 		
-		if (-0.01 <= x && x <= 0.01) {
+		
+		if (-0.02 <= x && x <= 0.02) {
 			x = 0.0;
+			this.setHealth(0);
 		}
-		if (-0.01 <= y && y <= 0.01) {
+		if (-0.02 <= y && y <= 0.02) {
 			y = 0.0;
+			this.setHealth(0);
 		}
-		
-		System.out.println("X postion: " + x + " y position: " + y);
-		// System.out.println();
-		
-		/*x = (y - dT*speed);
-		y = (x - dT*speed);*/
+		this.getPosition().setX(x);
+		this.getPosition().setY(y);
 		
 		
 	}

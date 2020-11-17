@@ -40,5 +40,5 @@ public abstract class Weapon {
 	public void setTarget(Enemy target) {
 		this.target = target;
 	}
-
+	
 }
