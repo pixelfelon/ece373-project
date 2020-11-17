@@ -2,36 +2,26 @@ package gameobjects;
 
 public abstract class Entity {
 
-	private int health;
-	private int xPosition;
-	private int yPosition;
+	private Coordinates position;
+	private boolean readyToDelete;
 	
 	public Entity() {
-		
+		this.readyToDelete = false;
+		this.position = new Coordinates();
 	}
 
-	public int getHealth() {
-		return health;
+	public Coordinates getPosition() {
+		return this.position;
 	}
 
-	public void setHealth(int health) {
-		this.health = health;
+	public boolean getReadyToDelete() {
+		return this.readyToDelete;
 	}
 
-	public int getxPosition() {
-		return xPosition;
+	protected void markReadyToDelete() {
+		this.readyToDelete = true;
 	}
 
-	public void setxPosition(int xPosition) {
-		this.xPosition = xPosition;
-	}
+	public abstract void tick(double dT);
 
-	public int getyPosition() {
-		return yPosition;
-	}
-
-	public void setyPosition(int yPosition) {
-		this.yPosition = yPosition;
-	}
-	
 }

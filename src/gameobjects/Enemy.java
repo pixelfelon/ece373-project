@@ -1,18 +1,28 @@
 package gameobjects;
 
+<<<<<<< HEAD
 public class Enemy extends Entity {
 private int spawnPosition;
 private int score = 1; 
+=======
+public class Enemy extends LivingEntity {
+>>>>>>> origin/master
 
-public Enemy () {}
+	private int spawnPosition;
 
-public int getSpawnPosition() {
-	return spawnPosition;
-}
+	public Enemy () {}
 
-public void setSpawnPosition(int spawnPosition) {
-	this.spawnPosition = spawnPosition;
-}
+	public int getSpawnPosition() {
+		return this.spawnPosition;
+	}
+
+	public void setSpawnPosition(int spawnPosition) {
+		this.spawnPosition = spawnPosition;
+	}
+
+	public void tick(double dT) {
+		//hello
+	}
 
 public int getScore() {
 	return score;
