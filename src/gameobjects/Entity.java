@@ -2,9 +2,10 @@ package gameobjects;
 
 public abstract class Entity {
 
-	private Coordinates position;
+	protected Coordinates position;
+
 	private boolean readyToDelete;
-	
+
 	public Entity() {
 		this.readyToDelete = false;
 		this.position = new Coordinates();

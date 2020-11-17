@@ -15,6 +15,13 @@ private int score = 1;
 		this.spawnPosition = spawnPosition;
 	}
 
+	public void setHealth(int health) {
+		this.health = health;
+		if (this.health <= 0) {
+			this.markReadyToDelete();
+		}
+	}
+
 	public void tick(double dT) {
 		//hello
 	}
