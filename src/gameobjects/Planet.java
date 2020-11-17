@@ -4,11 +4,12 @@ public class Planet extends Entity {
 
 	private Weapon weapon;
 	private Star star;
-	private int radius;
+	private double radius;
 	private double theta;
 
-	public Planet() {
-		theta = 0;
+	public Planet(double radius) {
+		this.radius = radius;
+		this.theta = 0;
 	}
 
 	public Weapon getWeapon() {
@@ -22,9 +23,10 @@ public class Planet extends Entity {
 	public void tick(double dT) {
 		theta = theta + 1;
 		this.getPosition().setX(radius * Math.cos((theta * Math.PI)/180));
-		this.getPosition().setY(radius * Math.cos((theta * Math.PI)/180));
-		weapon.setTarget(this.findClosestEnemy());
-		
+		this.getPosition().setY(radius * Math.sin((theta * Math.PI)/180));
+		if (this.weapon != null) {
+			this.weapon.setTarget(this.findClosestEnemy());
+		}
 	}
 
 	public void setStar(Star star) {

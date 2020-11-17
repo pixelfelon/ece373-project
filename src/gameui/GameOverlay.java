@@ -1,4 +1,4 @@
-package UI;
+package gameui;
 
 import gameobjects.Star;
 

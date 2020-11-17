@@ -34,7 +34,7 @@ public class Game {
 		this.entities.add(this.sun);
 
 		for (int i = 0; i < planets; i++) {
-			Planet planet = new Planet();
+			Planet planet = new Planet(0.3 + 0.5 * ((double)i / (double)planets));
 			this.planets.add(planet);
 			this.entities.add(planet);
 		}
