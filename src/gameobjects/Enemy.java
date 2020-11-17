@@ -1,14 +1,9 @@
 package gameobjects;
 
-<<<<<<< HEAD
-public class Enemy extends Entity {
+
+public class Enemy extends LivingEntity {
 private int spawnPosition;
 private int score = 1; 
-=======
-public class Enemy extends LivingEntity {
->>>>>>> origin/master
-
-	private int spawnPosition;
 
 	public Enemy () {}
 
