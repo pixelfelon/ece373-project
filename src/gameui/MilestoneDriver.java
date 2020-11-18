@@ -20,7 +20,7 @@ public class MilestoneDriver {
 				case "phalanx"		:
 				case "px" 		  	:
 				case "machinegun" 	:
-				case "mg" 			:	weapon = new Missile();
+				case "mg" 			:	weapon = new Phalanx();
 										break;
 				case "missile"		:
 				case "mis"			:	weapon = new Missile();
@@ -35,7 +35,7 @@ public class MilestoneDriver {
 		
 		long startTime = System.nanoTime();
 		double lastPrintTime = 0;
-		System.out.printf("Starting new game...\n");
+		System.out.printf("~~~~~~~~ Starting new game... ~~~~~~~~\n");
 		while (game.isGameActive()) {
 			game.tick();
 			double gameTime = (double)(System.nanoTime() - startTime) / 1000000000;
@@ -45,6 +45,7 @@ public class MilestoneDriver {
 			}
 			Thread.sleep(33);
 		}
+		System.out.println("~~~~~~~~");
 		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));
 	}
 

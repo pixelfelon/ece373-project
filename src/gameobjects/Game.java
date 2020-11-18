@@ -46,7 +46,7 @@ public class Game {
 				case 2: newGun = new RailGun(); break;
 				case 3: newGun = new Missile(); break;
 			}
-			planet.setWeapon(newGun); //testing weapon
+			//planet.setWeapon(newGun); //testing weapon
 			this.planets.add(planet);
 			this.entities.add(planet);
 		}
