@@ -2,6 +2,7 @@ package gameobjects;
 
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 
@@ -72,16 +73,31 @@ public class Game {
 
 
 	private void spawnEnemy() {
-		//TODO do we want the enemies to start outside of the window?
-		int posMin = -1;
-		int posMax = 1;
-		//speed needs adjusting
-		double speedMin = 0.01;
-		double speedMax = 0.05;
 		
-		double posX = Math.random() * (posMax - posMin + 1) + posMin;
-		double posY = Math.random() * (posMax - posMin + 1) + posMin;
-		double speed = Math.random() * (speedMax - speedMin + 1) + speedMin;
+		double posX = 0.0;
+		double posY = 0.0;
+		//TODO do we want the enemies to start outside of the window?
+		int posMin = 1;
+		int posMax = 2;
+		//speed needs adjusting
+		double speedMin = 0.05;
+		double speedMax = 0.08;
+		int i = 1;
+		int j = 1;
+		
+		Random rd = new Random(); // creating Random object
+		
+	    if(rd.nextBoolean()) {
+	    	i = -1;
+	    }
+	    if(rd.nextBoolean()) {
+	    	j = -1;
+	    }
+	    
+	    posX = i*(Math.random() * (posMax - posMin) + posMin);
+		posY = j*(Math.random() * (posMax - posMin) + posMin);
+	    
+		double speed = Math.random() * (speedMax - speedMin) + speedMin;
 		
 		if (this.enemies.size() <= enemyLimit) {
 			Enemy enemy = new Enemy();

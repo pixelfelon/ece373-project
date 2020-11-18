@@ -41,11 +41,8 @@ public class Enemy extends LivingEntity {
 		y = m*x;
 		
 		
-		if (-0.02 <= x && x <= 0.02) {
+		if ((-0.02 <= x && x <= 0.02) && (-0.02 <= y && y <= 0.02)) {
 			x = 0.0;
-			this.setHealth(0);
-		}
-		if (-0.02 <= y && y <= 0.02) {
 			y = 0.0;
 			this.setHealth(0);
 		}
