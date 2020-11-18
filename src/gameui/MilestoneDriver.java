@@ -20,7 +20,7 @@ public class MilestoneDriver {
 				case "phalanx"		:
 				case "px" 		  	:
 				case "machinegun" 	:
-				case "mg" 			:	weapon = new Missile();
+				case "mg" 			:	weapon = new Phalanx();
 										break;
 				case "missile"		:
 				case "mis"			:	weapon = new Missile();
