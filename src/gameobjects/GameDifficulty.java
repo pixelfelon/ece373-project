@@ -2,17 +2,17 @@ package gameobjects;
 
 public enum GameDifficulty {
 
-	EASY(1),
-	NORMAL(2),
-	HARD(3);
+	EASY(1.5),
+	NORMAL(2.5),
+	HARD(3.5);
 
-	private final int enemyRate;
+	private final double enemyRate;
 
-	private GameDifficulty(int enemyRate) {
+	private GameDifficulty(double enemyRate) {
     	this.enemyRate = enemyRate;
     }
 
-    public int getEnemyRate () {
+    public double getEnemyRate () {
     	return this.enemyRate;
     }
 

@@ -8,8 +8,10 @@ public class Star extends LivingEntity {
 	private ArrayList<Planet> planets;
 
 	public Star() {
-		planets = new ArrayList<Planet>();
+		this.planets = new ArrayList<Planet>();
+		this.setHitRadius(0.1);
 	}
+
 	public ArrayList<Planet> getPlanets() {
 		return this.planets;
 	}
