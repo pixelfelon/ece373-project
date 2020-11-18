@@ -30,4 +30,8 @@ public abstract class LivingEntity extends Entity {
 		this.setHealth(this.getHealth() - damage);
 	}
 
+	public boolean inRangeOf(LivingEntity other) {
+		return this.pos.distanceTo(other.getPosition()) < (this.getHitRadius() + other.getHitRadius());
+	}
+
 }

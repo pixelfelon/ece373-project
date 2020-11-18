@@ -11,17 +11,18 @@ public class MilestoneDriver {
 		long startTime = System.nanoTime();
 		while (game.isGameActive()) {
 			game.tick();
-			System.out.printf("\n---- t=%.3f ---- sh=%d ----\n", (double)(System.nanoTime() - startTime) / 1000000000, game.getSun().getHealth());
+			//System.out.printf("\n---- t=%.3f ---- sh=%d ----\n", (double)(System.nanoTime() - startTime) / 1000000000, game.getSun().getHealth());
 			for (Entity e : game.getEntities()) {
-				System.out.print(e);
-				System.out.printf(":\tX=%.3f, Y=%.3f", e.getPosition().getX(), e.getPosition().getY());
+				//System.out.print(e);
+				//System.out.printf(":\tX=%.3f, Y=%.3f", e.getPosition().getX(), e.getPosition().getY());
 				if (LivingEntity.class.isAssignableFrom(e.getClass())) {
-					System.out.printf(", Health=%d", ((LivingEntity) e).getHealth());
+					//System.out.printf(", Health=%d", ((LivingEntity) e).getHealth());
 				}
-				System.out.println("");
+				//System.out.println("");
 			}
 			Thread.sleep(33);
 		}
+		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));
 	}
 
 }

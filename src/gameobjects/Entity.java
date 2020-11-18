@@ -2,20 +2,20 @@ package gameobjects;
 
 public abstract class Entity {
 
-	protected Coordinates position;
+	protected Vec2D pos;
 
 	private boolean readyToDelete;
 
 	public Entity() {
 		this.readyToDelete = false;
-		this.position = new Coordinates();
+		this.pos = new Vec2D();
 	}
 
-	public Coordinates getPosition() {
-		return this.position;
+	public Vec2D getPosition() {
+		return this.pos;
 	}
 
-	public boolean getReadyToDelete() {
+	public boolean isReadyToDelete() {
 		return this.readyToDelete;
 	}
 
@@ -24,5 +24,16 @@ public abstract class Entity {
 	}
 
 	public abstract void tick(double dT);
+
+	protected void moveTowards(Entity other, double speed) {
+		Vec2D direction = Vec2D.subtract(other.getPosition(), this.pos);
+		direction.normalize();
+		direction.scale(speed);
+		this.pos.add(direction);
+	}
+
+	protected double distanceTo(Entity other) {
+		return this.pos.distanceTo(other.getPosition());
+	}
 
 }

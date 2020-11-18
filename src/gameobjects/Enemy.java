@@ -3,10 +3,8 @@ package gameobjects;
 
 public class Enemy extends LivingEntity {
 
-	private Vec2D pos;
 	private LivingEntity target;
 	private double speed;
-	private double m;
 
 	public static final int damage = 5;
 
@@ -14,10 +12,9 @@ public class Enemy extends LivingEntity {
 		this.pos = pos;
 		this.target = target;
 		this.speed = 0.0;
-		this.m = this.pos.getSlope();
 	}
 
-	public Coordinates getPosition() {
+	public Vec2D getPosition() {
 		return this.pos;
 	}
 
@@ -37,32 +34,33 @@ public class Enemy extends LivingEntity {
 		return this.speed;
 	}
 
-	public void kamikaze() {
+	public void setHealth(int health) {
+		if (health <= 0) {
+			health = 0;
+			this.markReadyToDelete();
+			System.out.printf("Enemy %h died!\n", this);
+		}
+		else {
+			//System.out.printf("Enemy %h damaged, health = %d\n", this, this.getHealth());
+		}
+		super.setHealth(health);
+	}
+
+	protected void kamikaze() {
 		if (this.getHealth() > 0) {
 			this.target.dealDamage(damage);
 			this.setHealth(0);
+			System.out.printf("!!! Enemy %h reached the sun! Sun health = %d\n", this, this.target.getHealth());
 		}
 	}
 
 	public void tick(double dT) {
+		this.moveTowards(this.target, this.speed * dT);
 
-		if (this.pos.getX() > 0) {
-			this.pos.addX(- dT * this.speed);
-		}
-
-		else if (this.pos.getX() < 0) {
-			this.pos.addX(+ dT * this.speed);
-		}
-
-		this.pos.setY(this.m * this.pos.getX());
-
-		Vec2D targetPos = new Vec2D(this.target.getPosition());
-		if (this.pos.distanceTo(targetPos) < (this.getHitRadius() + this.target.getHitRadius())) {
+		if (this.inRangeOf(this.target)) {
 			this.kamikaze();
 			this.markReadyToDelete();
 		}
-
-		//System.out.println("x: " + x + " y: " + y); //For Testing
 	}
 
 }

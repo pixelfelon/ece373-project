@@ -45,8 +45,15 @@ public abstract class Weapon {
 	public void attack() {
 		//Enemy enemy = this.weapon.getTarget();
 		if(this.reloadTimer == 0) {
-		target.setHealth(target.getHealth() - this.getDamage());
-		this.reloadTimer = 12;
+			if (this.target != null) {
+				if (this.target.isReadyToDelete()) {
+					this.target = null;
+				}
+				else {
+					target.dealDamage(this.getDamage());
+				}
+			}
+			this.reloadTimer = 12;
 		}
 		else {
 			this.reloadTimer = this.reloadTimer - this.attackSpeed;

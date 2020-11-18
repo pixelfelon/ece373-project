@@ -2,7 +2,7 @@ package gameobjects;
 
 import java.lang.Math; 
 
-public class Vec2D extends Coordinates {
+public class Vec2D {
 
 	private double x;
 	private double y;
@@ -16,9 +16,12 @@ public class Vec2D extends Coordinates {
 		this.y = y;
 	}
 
-	public Vec2D(Coordinates other) {
-		this.x = other.getX();
-		this.y = other.getY();
+	public Vec2D(Vec2D other) {
+		this(other.getX(), other.getY());
+	}
+
+	public String toString() {
+		return String.format("X=%.3f, Y=%.3f", this.x, this.y);
 	}
 
 	public void setXY(double x, double y) {
@@ -71,7 +74,7 @@ public class Vec2D extends Coordinates {
 		return a < this.y && this.y < b;
 	}
 
-	public boolean inRect(Coordinates v1, Coordinates v2) {
+	public boolean inRect(Vec2D v1, Vec2D v2) {
 		double x1 = Math.min(v1.getX(), v2.getX());
 		double x2 = Math.max(v1.getX(), v2.getX());
 		double y1 = Math.min(v1.getY(), v2.getY());
@@ -91,20 +94,20 @@ public class Vec2D extends Coordinates {
 		return Math.atan2(this.y, this.x);
 	}
 
-	public double distanceTo(Coordinates other) {
+	public double distanceTo(Vec2D other) {
 		double distance = Math.sqrt(Math.pow((other.getX() - this.x), 2) + Math.pow((other.getY() - this.y), 2));
 
 		return distance;
 	}
 
-	public void add(Coordinates other) {
+	public void add(Vec2D other) {
 		this.x += other.getX();
 		this.y += other.getY();
 	}
 
-	public void subtract(Coordinates other) {
-		this.x += other.getX();
-		this.y += other.getY();
+	public void subtract(Vec2D other) {
+		this.x -= other.getX();
+		this.y -= other.getY();
 	}
 
 	public void scale(double factor) {
@@ -118,25 +121,25 @@ public class Vec2D extends Coordinates {
 		this.y /= length;
 	}
 
-	public static Vec2D add(Coordinates v1, Coordinates v2) {
+	public static Vec2D add(Vec2D v1, Vec2D v2) {
 		Vec2D out = new Vec2D(v1);
 		out.add(v2);
 		return out;
 	}
 
-	public static Vec2D subtract(Coordinates v1, Coordinates v2) {
+	public static Vec2D subtract(Vec2D v1, Vec2D v2) {
 		Vec2D out = new Vec2D(v1);
 		out.subtract(v2);
 		return out;
 	}
 
-	public static Vec2D scale(Coordinates v1, double factor) {
+	public static Vec2D scale(Vec2D v1, double factor) {
 		Vec2D out = new Vec2D(v1);
 		out.scale(factor);
 		return out;
 	}
 
-	public static Vec2D normalize(Coordinates v1) {
+	public static Vec2D normalize(Vec2D v1) {
 		Vec2D out = new Vec2D(v1);
 		out.normalize();
 		return out;

@@ -1,6 +1,6 @@
 package gameobjects;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 public class Planet extends Entity {
 
@@ -8,30 +8,45 @@ public class Planet extends Entity {
 	private Star star;
 	private double radius;
 	private double theta;
-	private ArrayList<Enemy> enemy;
+	private double speed;
+	private Set<Enemy> enemies;
 
-	public Planet(double radius) {
+	public Planet(double radius, Set<Enemy> enemies) {
 		this.radius = radius;
 		this.theta = 0;
-		enemy = new ArrayList<Enemy>();
+		this.speed = Math.pow(Math.E, radius) * 0.1;
+		this.enemies = enemies;
+		System.out.printf("New planet created, r=%.2f, omega=%.3f\n", this.radius, this.speed);
 	}
 
 	public Weapon getWeapon() {
-		return weapon;
+		return this.weapon;
 	}
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+		System.out.printf("Planet %h equipped with weapon type %s.\n", this, weapon.getClass().getName());
 	}
 
 	public void tick(double dT) {
 		
-		theta = theta + 1;
+		this.theta += this.speed;
 		this.getPosition().setX(radius * Math.cos((theta * Math.PI)/180));
 		this.getPosition().setY(radius * Math.sin((theta * Math.PI)/180));
-		Enemy en = this.findClosestEnemy();
-		if (this.weapon != null && en != null) {
-			this.weapon.setTarget(this.findClosestEnemy());
+		if (this.weapon != null) {
+			Enemy newEnemy = this.findClosestEnemy();
+			Enemy curEnemy = this.weapon.getTarget();
+			if (newEnemy != null) {
+				if (curEnemy == null) {
+					this.weapon.setTarget(newEnemy);
+					System.out.printf("Planet %h targeting enemy %h at range %.3f.\n", this, newEnemy, this.distanceTo(newEnemy));
+				}
+				else if ((this.distanceTo(curEnemy) - this.distanceTo(newEnemy)) > 0.1) {
+					// some hysteresis for target switching
+					this.weapon.setTarget(newEnemy);
+					System.out.printf("Planet %h now targeting enemy %h at range %.3f.\n", this, newEnemy, this.distanceTo(newEnemy));
+				}
+			}
 			this.weapon.attack();
 		}
 	}
@@ -39,38 +54,34 @@ public class Planet extends Entity {
 	public void setStar(Star star) {
 		this.star = star;
 	}
-	
-	public ArrayList<Enemy> getEnemy() {
-		return enemy;
+
+	public Set<Enemy> getEnemies() {
+		return enemies;
 	}
 
-	public void setEnemy(Enemy enemy) {
-		this.enemy.add(enemy);
+	public void setEnemies(Set<Enemy> enemies) {
+		this.enemies = enemies;
 	}
-	
+
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
-	
+
 	public Enemy findClosestEnemy() {
-		
+
 		Enemy target = null;
-		
-		double x = 0.0;
-		double y = 0.0;
+
 		double dist = 0.0;
 		double closestEnemy = 10.0;
-		
-		for (Enemy e : enemy) {
-			
-		x = e.getPosition().getX();
-		y = e.getPosition().getY();
-		dist = this.getPosition().distance(x, y);
 
-		if(dist < closestEnemy && dist < this.weapon.getRange()) {
-			target = e;
-			closestEnemy = dist;
-			//System.out.println("closest enemy dist: " + closestEnemy);
+		for (Enemy e : this.enemies) {
+
+			dist = this.pos.distanceTo(e.getPosition());
+
+			if(dist < closestEnemy && dist < this.weapon.getRange()) {
+				target = e;
+				closestEnemy = dist;
+				//System.out.println("closest enemy dist: " + closestEnemy);
 			}
 		}
 		
@@ -78,7 +89,7 @@ public class Planet extends Entity {
 		/*if(target != null) {
 		target.dealDamage(5);
 		}*/
-		
+
 		return target;
 	}
 
