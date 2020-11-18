@@ -40,8 +40,17 @@ public class MilestoneDriver {
 			game.tick();
 			double gameTime = (double)(System.nanoTime() - startTime) / 1000000000;
 			if (Math.floor(gameTime) > lastPrintTime) {
-				System.out.printf("---- Score = %d ---- Sun's Health = %d ----\n", (int)Math.floor(gameTime), game.getSun().getHealth());
+				System.out.printf("\n---- Score = %d ---- Sun's Health = %d ----\n", (int)Math.floor(gameTime), game.getSun().getHealth());
 				lastPrintTime = gameTime;
+				for (Entity e : game.getEntities()) {
+	            	System.out.print(e);
+	            	System.out.printf(":\tX=%.3f, Y=%.3f", e.getPosition().getX(), e.getPosition().getY());
+	            	if (LivingEntity.class.isAssignableFrom(e.getClass())) {
+	                	System.out.printf(", Health=%d", ((LivingEntity) e).getHealth());
+	                }
+	                System.out.println("");
+	            }
+				System.out.printf("-------------------------------------------\n");
 			}
 			Thread.sleep(33);
 		}
