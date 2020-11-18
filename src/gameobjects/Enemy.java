@@ -45,6 +45,7 @@ public class Enemy extends LivingEntity {
 			x = 0.0;
 			y = 0.0;
 			this.setHealth(0);
+			//this.markReadyToDelete();
 		}
 		
 		//System.out.println("x: " + x + " y: " + y); //For Testing
