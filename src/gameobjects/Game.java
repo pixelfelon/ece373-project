@@ -2,7 +2,6 @@ package gameobjects;
 
 import java.util.HashSet;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Game {
 
@@ -18,7 +17,7 @@ public class Game {
 	private long lastNanos;
 	private boolean gameActive;
 
-	private static final int enemyLimit = 100;
+	private static final int enemyLimit = 5;
 
 	public Game() {
 		this(5, GameDifficulty.NORMAL);
@@ -26,6 +25,8 @@ public class Game {
 
 	public Game(int planets, GameDifficulty difficulty) {
 		this.difficulty = difficulty;
+		this.viewportWidth = 500;
+		this.viewportHeight = 500;
 	
 		this.entities = new HashSet<Entity>();
 		this.enemies = new HashSet<Enemy>();
@@ -51,6 +52,18 @@ public class Game {
 		return this.entities;
 	}
 
+	public HashSet<Enemy> getEnemies() {
+		return this.enemies;
+	}
+
+	public ArrayList<Planet> getPlanets() {
+		return this.planets;
+	}
+
+	public Star getSun() {
+		return this.sun;
+	}
+
 	public GameDifficulty getDifficulty() {
 		return this.difficulty;
 	}
@@ -73,35 +86,21 @@ public class Game {
 
 
 	private void spawnEnemy() {
-		
-		double posX = 0.0;
-		double posY = 0.0;
-		//TODO do we want the enemies to start outside of the window?
-		int posMin = 1;
-		int posMax = 2;
 		//speed needs adjusting
 		double speedMin = 0.05;
 		double speedMax = 0.08;
-		int i = 1;
-		int j = 1;
-		
-		Random rd = new Random(); // creating Random object
-		
-	    if(rd.nextBoolean()) {
-	    	i = -1;
-	    }
-	    if(rd.nextBoolean()) {
-	    	j = -1;
-	    }
-	    
-	    posX = i*(Math.random() * (posMax - posMin) + posMin);
-		posY = j*(Math.random() * (posMax - posMin) + posMin);
-	    
+
+		// starting position is at random point on a circle slightly larger than the viewport
+		Vec2D startPos = new Vec2D();
+		double r = this.getOuterBound() * (Math.PI / 2) * 1.05;
+		double theta = Math.random() * 2 * Math.PI;
+		startPos.setRTheta(r, theta);
+
 		double speed = Math.random() * (speedMax - speedMin) + speedMin;
-		
+
 		if (this.enemies.size() <= enemyLimit) {
-			Enemy enemy = new Enemy();
-			enemy.setSpawnPosition(posX, posY);
+			System.out.printf("Spawning enemy at theta=%.1fdeg\n", theta * 180.0 / Math.PI);
+			Enemy enemy = new Enemy(startPos, this.sun);
 			enemy.setSpeed(speed);
 			this.entities.add(enemy);
 			this.enemies.add(enemy);
@@ -149,7 +148,7 @@ public class Game {
 			e.tick(dT);
 		}
 
-		for (int i = 0; i < this.difficulty.getEnemyRate(); i++) {
+		if (Math.random() * this.difficulty.getEnemyRate() > 1.0) {
 			this.spawnEnemy();
 		}
 

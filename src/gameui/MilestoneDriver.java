@@ -11,7 +11,7 @@ public class MilestoneDriver {
 		long startTime = System.nanoTime();
 		while (game.isGameActive()) {
 			game.tick();
-			System.out.printf("\n---- t=%f ----\n", (double)(System.nanoTime() - startTime) / 1000000000);
+			System.out.printf("\n---- t=%.3f ---- sh=%d ----\n", (double)(System.nanoTime() - startTime) / 1000000000, game.getSun().getHealth());
 			for (Entity e : game.getEntities()) {
 				System.out.print(e);
 				System.out.printf(":\tX=%.3f, Y=%.3f", e.getPosition().getX(), e.getPosition().getY());
