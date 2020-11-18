@@ -14,36 +14,34 @@ public class MilestoneDriver {
 	public static void main(String[] args) throws InterruptedException {
 		int inum = Integer.parseInt(args[1]);
 		Game game = new Game(inum, GameDifficulty.valueOf(args[0]));
-		int j = 0;
 		for(int i = 2; i < args.length; i++) {
-			Phalanx phalanx = new Phalanx();
-			Missile missile = new Missile();
-			RailGun railgun = new RailGun();
+			Weapon weapon = null;
 			switch (args[i]) {
-				case "phalanx"		: 	game.getPlanets().get(j).setWeapon(phalanx); break;
-				case "px" 		  	:	game.getPlanets().get(j).setWeapon(phalanx); break;
-				case "machinegun" 	:	game.getPlanets().get(j).setWeapon(phalanx); break;
-				case "mg" 			:	game.getPlanets().get(j).setWeapon(phalanx); break;
-				case "missile"		:	game.getPlanets().get(j).setWeapon(missile); break;
-				case "mis"			:	game.getPlanets().get(j).setWeapon(missile); break;
-				case "railgun"		:	game.getPlanets().get(j).setWeapon(railgun); break;
-				case "rg"			:	game.getPlanets().get(j).setWeapon(railgun); break;
+				case "phalanx"		:
+				case "px" 		  	:
+				case "machinegun" 	:
+				case "mg" 			:	weapon = new Missile();
+										break;
+				case "missile"		:
+				case "mis"			:	weapon = new Missile();
+										break;
+				case "railgun"		:
+				case "rg"			:	weapon = new RailGun();
+										break;
 				default				:	break;
 			}
-			j++;
+			game.getPlanets().get(i - 2).setWeapon(weapon);
 		}
 		
 		long startTime = System.nanoTime();
+		double lastPrintTime = 0;
+		System.out.printf("Starting new game...\n");
 		while (game.isGameActive()) {
 			game.tick();
-			System.out.printf("\n---- score=%.0f ---- sh=%d ----\n", (double)(System.nanoTime() - startTime) / 1000000000, game.getSun().getHealth());
-			for (Entity e : game.getEntities()) {
-				//System.out.print(e);
-				//System.out.printf(":\tX=%.3f, Y=%.3f", e.getPosition().getX(), e.getPosition().getY());
-				if (LivingEntity.class.isAssignableFrom(e.getClass())) {
-					//System.out.printf(", Health=%d", ((LivingEntity) e).getHealth());
-				}
-				//System.out.println("");
+			double gameTime = (double)(System.nanoTime() - startTime) / 1000000000;
+			if (Math.floor(gameTime) > lastPrintTime) {
+				System.out.printf("---- Score = %d ---- Sun's Health = %d ----\n", (int)Math.floor(gameTime), game.getSun().getHealth());
+				lastPrintTime = gameTime;
 			}
 			Thread.sleep(33);
 		}
