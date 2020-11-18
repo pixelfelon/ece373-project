@@ -31,6 +31,7 @@ public class Planet extends Entity {
 		this.getPosition().setY(radius * Math.sin((theta * Math.PI)/180));
 		if (this.weapon != null) {
 			this.weapon.setTarget(this.findClosestEnemy());
+			this.weapon.attack();
 		}
 	}
 

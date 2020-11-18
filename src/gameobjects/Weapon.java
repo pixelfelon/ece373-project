@@ -4,6 +4,7 @@ public abstract class Weapon {
 
 	protected int damage;
 	protected int attackSpeed;
+	protected int reloadTimer = 0;
 	protected double range;
 	private Enemy target;
 
@@ -39,6 +40,17 @@ public abstract class Weapon {
 
 	public void setTarget(Enemy target) {
 		this.target = target;
+	}
+
+	public void attack() {
+		//Enemy enemy = this.weapon.getTarget();
+		if(this.reloadTimer == 0) {
+		target.setHealth(target.health - this.getDamage());
+		this.reloadTimer = 12;
+		}
+		else {
+			this.reloadTimer = this.reloadTimer - this.attackSpeed;
+		}
 	}
 	
 }

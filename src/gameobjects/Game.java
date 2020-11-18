@@ -81,7 +81,7 @@ public class Game {
 		
 		double posX = Math.random() * (posMax - posMin + 1) + posMin;
 		double posY = Math.random() * (posMax - posMin + 1) + posMin;
-		double speed = Math.random() * (speedMax - speedMin + 1) + speedMin;
+		double speed = Math.random() * (speedMax - speedMin) + speedMin;
 		
 		if (this.enemies.size() <= enemyLimit) {
 			Enemy enemy = new Enemy();
