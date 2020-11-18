@@ -1,13 +1,19 @@
 package gameui;
 
 import gameobjects.Game;
+import gameobjects.GameDifficulty;
 import gameobjects.Entity;
 import gameobjects.LivingEntity;
 
 public class MilestoneDriver {
 
 	public static void main(String[] args) throws InterruptedException {
-		Game game = new Game();
+		int inum = Integer.parseInt(args[1]);
+		Game game = new Game(inum, GameDifficulty.valueOf(args[0]));
+		for(int i = 2; i < args.length; i++) {
+			//setup planets
+		}
+		
 		long startTime = System.nanoTime();
 		while (game.isGameActive()) {
 			game.tick();
