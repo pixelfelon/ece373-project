@@ -2,6 +2,7 @@ package gameui;
 
 import gameobjects.Game;
 import gameobjects.GameDifficulty;
+import ece.test.gui.MainWindow;
 import gameobjects.Entity;
 import gameobjects.LivingEntity;
 import gameobjects.Weapon;
@@ -12,7 +13,13 @@ import gameobjects.RailGun;
 public class MilestoneDriver {
 
 	public static void main(String[] args) throws InterruptedException {
-		int inum = Integer.parseInt(args[1]);
+		
+		SolorDefenderGUI frame = new SolorDefenderGUI();
+	    frame.setBounds(400, 200, 800, 500);
+	    frame.setVisible(true);
+	    
+	    
+		/*int inum = Integer.parseInt(args[1]);
 		Game game = new Game(inum, GameDifficulty.valueOf(args[0]));
 		for(int i = 2; i < args.length; i++) {
 			Weapon weapon = null;
@@ -55,7 +62,7 @@ public class MilestoneDriver {
 			Thread.sleep(33);
 		}
 		System.out.println("~~~~~~~~");
-		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));
+		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));*/
 	}
 
 }
