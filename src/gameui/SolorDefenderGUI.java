@@ -1,6 +1,7 @@
 package gameui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -22,7 +23,9 @@ import gameobjects.GameDifficulty;
 public class SolorDefenderGUI extends JFrame {
 	
 		private Image background = Toolkit.getDefaultToolkit().getImage("solar_system_background.jpg");
-
+		//for setMinimum parameter
+		private Dimension screenSize = new Dimension(720, 542); 
+		
 		private JPanel mainScreen = new JPanel();
 		private JPanel difficultyScreen = new JPanel();
 		private JPanel highScoreScreen = new JPanel();
@@ -90,6 +93,7 @@ public class SolorDefenderGUI extends JFrame {
 		
 		private void BuildDiffScreen() {
 			
+			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\solar_system_background.jpg").getImage());
 			difficultyScreen.setLayout(null);
 			
 		    //Main Screen
@@ -107,7 +111,7 @@ public class SolorDefenderGUI extends JFrame {
 		    difficultyScreen.add(medButton);
 		    difficultyScreen.add(hardButton);
 		    difficultyScreen.add(returnButton);
-		    
+		    difficultyScreen.add(panel);
 		    this.pack();
 		}
 		
@@ -119,6 +123,14 @@ public class SolorDefenderGUI extends JFrame {
 		    update(getGraphics());
 		}
 		
+		public Dimension getScreenSize() {
+			return screenSize;
+		}
+
+		public void setScreenSize(Dimension screenSize) {
+			this.screenSize = screenSize;
+		}
+
 		private class ButtonListener implements ActionListener {
 		    
 			

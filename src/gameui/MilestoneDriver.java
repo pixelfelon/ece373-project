@@ -2,7 +2,11 @@ package gameui;
 
 import gameobjects.Game;
 import gameobjects.GameDifficulty;
-import ece.test.gui.MainWindow;
+
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
 import gameobjects.Entity;
 import gameobjects.LivingEntity;
 import gameobjects.Weapon;
@@ -15,11 +19,15 @@ public class MilestoneDriver {
 	public static void main(String[] args) throws InterruptedException {
 		
 		SolorDefenderGUI frame = new SolorDefenderGUI();
-	    frame.setBounds(400, 200, 800, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//x, y, width, height
+	    frame.setBounds(400, 200, 720, 542);
+	    //frame.setMinimumSize(frame.getScreenSize());
+	    frame.setResizable(false);
 	    frame.setVisible(true);
 	    
 	    
-		/*int inum = Integer.parseInt(args[1]);
+		int inum = Integer.parseInt(args[1]);
 		Game game = new Game(inum, GameDifficulty.valueOf(args[0]));
 		for(int i = 2; i < args.length; i++) {
 			Weapon weapon = null;
@@ -62,7 +70,7 @@ public class MilestoneDriver {
 			Thread.sleep(33);
 		}
 		System.out.println("~~~~~~~~");
-		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));*/
+		System.out.printf("GAME OVER! Score: %d\n", (int)((double)(System.nanoTime() - startTime) / 1000000000));
 	}
 
 }
