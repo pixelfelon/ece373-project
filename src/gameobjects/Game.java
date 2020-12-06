@@ -22,9 +22,24 @@ public class Game {
 	private static final int enemyLimit = 5;
 
 	public Game() {
-		this(5, GameDifficulty.NORMAL);
+		//this(5, GameDifficulty.NORMAL);
 	}
+	
+	public Game(GameDifficulty difficulty) {
+		this.difficulty = difficulty;
+		this.viewportWidth = 500;
+		this.viewportHeight = 500;
+		this.entities = new HashSet<Entity>();
+		this.enemies = new HashSet<Enemy>();
+		this.planets = new ArrayList<Planet>();
+		Set<Enemy> enemiesView = Collections.unmodifiableSet(this.enemies);
 
+		this.sun = new Star();
+		this.entities.add(this.sun);
+		
+		this.reset();
+	}
+	
 	public Game(int planets, GameDifficulty difficulty) {
 		this.difficulty = difficulty;
 		this.viewportWidth = 500;
@@ -54,6 +69,9 @@ public class Game {
 		this.reset();
 	}
 
+	public void playGame() {
+		
+	}
 
 	public HashSet<Entity> getEntities() {
 		return this.entities;
@@ -65,6 +83,13 @@ public class Game {
 
 	public ArrayList<Planet> getPlanets() {
 		return this.planets;
+	}
+	
+	public void addPlanet(Planet planet) {
+		planets.add(planet);
+	}
+	public void removePlanet(Planet planet) {
+		planets.remove(planet);
 	}
 
 	public Star getSun() {

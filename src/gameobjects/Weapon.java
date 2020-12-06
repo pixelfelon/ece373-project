@@ -1,7 +1,8 @@
 package gameobjects;
 
 public abstract class Weapon {
-
+	
+	String name;
 	protected int damage;
 	protected int attackSpeed;
 	protected int reloadTimer = 0;
@@ -10,6 +11,12 @@ public abstract class Weapon {
 
 	public Weapon() {}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getName() {
+		return this.getName();
+	}
 	public int getDamage() {
 		return this.damage;
 	}

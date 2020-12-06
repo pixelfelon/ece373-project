@@ -11,7 +11,15 @@ public class Planet extends Entity {
 	private double speed;
 	private Set<Enemy> enemies;
 
+	public Planet(double radius) {
+		this.weapon = new NoWeapon();
+		this.radius = radius;
+		this.theta = 0;
+		this.speed = Math.pow(Math.E, radius) * 0.1;
+		System.out.printf("New planet %h created, r=%.2f, omega=%.3f\n", this, this.radius, this.speed);
+	}
 	public Planet(double radius, Set<Enemy> enemies) {
+		this.weapon = new NoWeapon();
 		this.radius = radius;
 		this.theta = 0;
 		this.speed = Math.pow(Math.E, radius) * 0.1;
