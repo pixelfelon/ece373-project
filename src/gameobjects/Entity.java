@@ -24,6 +24,7 @@ public abstract class Entity {
 	}
 
 	public abstract void tick(double dT);
+	public abstract void reset();
 
 	protected void moveTowards(Entity other, double speed) {
 		Vec2D direction = Vec2D.subtract(other.getPosition(), this.pos);

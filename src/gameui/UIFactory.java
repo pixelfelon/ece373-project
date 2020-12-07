@@ -11,20 +11,19 @@ public class UIFactory {
 	{
 		if (Planet.class.isAssignableFrom(entity.getClass()))
 		{
-			return new UIPlanet(parent, entity);
+			return new UIPlanet(parent, (Planet)entity);
 		}
 		if (Star.class.isAssignableFrom(entity.getClass()))
 		{
-			return new UISun(parent, entity);
+			return new UISun(parent, (Star)entity);
 		}
 		if (Enemy.class.isAssignableFrom(entity.getClass()))
 		{
-			return new UIEnemy(parent, entity);
+			return new UIEnemy(parent, (Enemy)entity);
 		}
 		else
 		{
-			return new UIDefault(parent, entity);
-			//throw new RuntimeException();
+			throw new RuntimeException();
 		}
 	}
 

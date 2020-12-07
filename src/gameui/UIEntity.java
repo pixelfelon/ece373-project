@@ -2,6 +2,7 @@ package gameui;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
@@ -42,6 +43,15 @@ public abstract class UIEntity
 		return new Point2D.Double(x, y);
 	}
 
+	protected double
+	scaleCoord (Double coord)
+	{
+		double vh = this.parent.getHeight();
+		double vw = this.parent.getWidth();
+		double vmin = Math.min(vh, vw);
+		return coord * (vmin / 2.0);
+	}
+
 	protected void
 	offSet (int width, int height)
 	{
@@ -49,9 +59,10 @@ public abstract class UIEntity
 		offSetY = height / 2;
 	}
 
-	protected static void
-	centerImg (Graphics2D g, Point2D p, BufferedImage img)
+	protected void
+	centerImg (Graphics2D g, Vec2D v, BufferedImage img)
 	{
+		Point2D p = this.convertCoords(v);
 		AffineTransform old = g.getTransform();
 		g.translate(
 			p.getX() - ((double)img.getWidth() / 2.0),
@@ -59,5 +70,13 @@ public abstract class UIEntity
 		);
 		g.drawImage(img, 0, 0, null);
 		g.setTransform(old);
+	}
+
+	protected void
+	centerCircle (Graphics2D g, Vec2D v, double radius)
+	{
+		Point2D p = this.convertCoords(v);
+		radius = this.scaleCoord(radius);
+		g.draw(new Ellipse2D.Double(p.getX() - radius, p.getY() - radius, radius * 2.0, radius * 2.0));
 	}
 }

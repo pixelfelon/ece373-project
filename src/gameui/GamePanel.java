@@ -3,11 +3,9 @@ package gameui;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashSet;
-import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -32,7 +30,7 @@ public class GamePanel extends JPanel
 		this.game = game;
 		this.running = false;
 		this.simTimer = new Timer(
-			33,
+			tickMs,
 			new ActionListener()
 			{
 				@Override
@@ -73,11 +71,13 @@ public class GamePanel extends JPanel
 		double vw = this.getWidth();
 		System.out.printf("Screen h/w %f %f\n", vh, vw);
 		this.running = true;
+		this.game.reset();
 		this.entities.clear();
 		for (Entity gameEntity: this.game.getEntities())
 		{
 			this.addEntity(gameEntity);
 		}
+		this.game.clearNewEntities();
 		this.simTimer.start();
 	}
 
@@ -85,7 +85,6 @@ public class GamePanel extends JPanel
 	stopSimulation ()
 	{
 		this.running = false;
-		this.game.reset();
 		this.simTimer.stop();
 		this.pruneEntities();
 		this.repaint();
@@ -128,7 +127,7 @@ public class GamePanel extends JPanel
 		this.repaint();
 		if (!this.game.isGameActive())
 		{
-			this.stopSimulation();
+			//this.stopSimulation();
 		}
 	}
 

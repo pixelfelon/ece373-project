@@ -5,19 +5,15 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -38,7 +34,6 @@ import gameobjects.Weapon;
 public class SolarDefenderGUI extends JFrame {
 	
 		private Game game = new Game();
-		private JPanel content = new JPanel();
 		private CardLayout layout = new CardLayout();
 		
 		private Image background = Toolkit.getDefaultToolkit().getImage("solar_system_background.jpg");
@@ -73,12 +68,12 @@ public class SolarDefenderGUI extends JFrame {
 		private JRadioButton planet4Radio = new JRadioButton("Hipra");
 		private JRadioButton planet5Radio = new JRadioButton("Galea");
 		private JRadioButton planet6Radio = new JRadioButton("Voneon");
-		private JComboBox	planet1WeaponSelect = new JComboBox(weapons);
-		private JComboBox	planet2WeaponSelect = new JComboBox(weapons);
-		private JComboBox	planet3WeaponSelect = new JComboBox(weapons);
-		private JComboBox	planet4WeaponSelect = new JComboBox(weapons);
-		private JComboBox	planet5WeaponSelect = new JComboBox(weapons);
-		private JComboBox	planet6WeaponSelect = new JComboBox(weapons);
+		private JComboBox<String> planet1WeaponSelect = new JComboBox<String>(weapons);
+		private JComboBox<String> planet2WeaponSelect = new JComboBox<String>(weapons);
+		private JComboBox<String> planet3WeaponSelect = new JComboBox<String>(weapons);
+		private JComboBox<String> planet4WeaponSelect = new JComboBox<String>(weapons);
+		private JComboBox<String> planet5WeaponSelect = new JComboBox<String>(weapons);
+		private JComboBox<String> planet6WeaponSelect = new JComboBox<String>(weapons);
 		private	JButton planetToDifficulty = new JButton("< Back");
 		private	JButton planetConfirm = new JButton("Confirm");
 		
@@ -104,12 +99,12 @@ public class SolarDefenderGUI extends JFrame {
 		private JLabel planet4Label = new JLabel(planet4Icon);
 		private JLabel planet5Label = new JLabel(planet5Icon);
 		private JLabel planet6Label = new JLabel(planet6Icon);
-		Planet planet1 = new Planet(0.3 + 0.5 * (1.0 / 6.0));
-		Planet planet2 = new Planet(0.3 + 0.5 * (1.5 / 6.0));
-		Planet planet3 = new Planet(0.3 + 0.5 * (2.0 / 6.0));
-		Planet planet4 = new Planet(0.3 + 0.5 * (3.0 / 6.0));
-		Planet planet5 = new Planet(0.3 + 0.5 * (3.5 / 6.0));
-		Planet planet6 = new Planet(0.3 + 0.5 * (4.0 / 6.0));
+		Planet planet1 = new Planet(0.3 + 0.5 * (0.0 / 5.0));
+		Planet planet2 = new Planet(0.3 + 0.5 * (1.0 / 5.0));
+		Planet planet3 = new Planet(0.3 + 0.5 * (2.0 / 5.0));
+		Planet planet4 = new Planet(0.3 + 0.5 * (3.0 / 5.0));
+		Planet planet5 = new Planet(0.3 + 0.5 * (4.0 / 5.0));
+		Planet planet6 = new Planet(0.3 + 0.5 * (5.0 / 5.0));
 		Weapon weapon1 = null;
 		
 		public SolarDefenderGUI() {
@@ -121,6 +116,13 @@ public class SolarDefenderGUI extends JFrame {
 		    this.add(planetSelectScreen, "PLANETS");
 		    this.add(gameScreen, "GAME");
 		    this.add(highScoreScreen, "HIGHSCORES");
+
+		    planet1.spriteIdx = 1;
+		    planet2.spriteIdx = 2;
+		    planet3.spriteIdx = 3;
+		    planet4.spriteIdx = 4;
+		    planet5.spriteIdx = 5;
+		    planet6.spriteIdx = 6;
 
 		    BuildMainScreen();
 		    BuildDiffScreen();

@@ -26,4 +26,8 @@ public class Star extends LivingEntity {
 		// glow
 	}
 
+	public void reset() {
+		this.setHealth(100);
+	}
+
 }

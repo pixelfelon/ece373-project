@@ -10,23 +10,30 @@ public class Planet extends Entity {
 	private double theta;
 	private double speed;
 	private Set<Enemy> enemies;
+	public int spriteIdx = 0;
 
 	public Planet(double radius) {
 		this.weapon = new NoWeapon();
-		this.radius = radius;
+		this.setRadius(radius);
 		this.theta = 0;
 		this.speed = Math.pow(Math.E, radius) * 0.1;
-		System.out.printf("New planet %h created, r=%.2f, omega=%.3f\n", this, this.radius, this.speed);
+		System.out.printf("New planet %h created, r=%.2f, omega=%.3f\n", this, this.getRadius(), this.speed);
 	}
 	public Planet(double radius, Set<Enemy> enemies) {
 		this.weapon = new NoWeapon();
-		this.radius = radius;
+		this.setRadius(radius);
 		this.theta = 0;
 		this.speed = Math.pow(Math.E, radius) * 0.1;
 		this.enemies = enemies;
-		System.out.printf("New planet %h created, r=%.2f, omega=%.3f\n", this, this.radius, this.speed);
+		System.out.printf("New planet %h created, r=%.2f, omega=%.3f\n", this, this.getRadius(), this.speed);
 	}
 
+	public double getRadius() {
+		return radius;
+	}
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
 	public Weapon getWeapon() {
 		return this.weapon;
 	}
@@ -39,8 +46,8 @@ public class Planet extends Entity {
 	public void tick(double dT) {
 		
 		this.theta += this.speed;
-		this.getPosition().setX(radius * Math.cos((theta * Math.PI)/180));
-		this.getPosition().setY(radius * Math.sin((theta * Math.PI)/180));
+		this.getPosition().setX(getRadius() * Math.cos((theta * Math.PI)/180));
+		this.getPosition().setY(getRadius() * Math.sin((theta * Math.PI)/180));
 		if (this.weapon != null) {
 			Enemy newEnemy = this.findClosestEnemy();
 			Enemy curEnemy = this.weapon.getTarget();
@@ -99,6 +106,10 @@ public class Planet extends Entity {
 		}*/
 
 		return target;
+	}
+
+	public void reset() {
+		this.theta = Math.random() * 360.0;
 	}
 
 }

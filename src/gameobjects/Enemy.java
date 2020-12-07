@@ -63,4 +63,8 @@ public class Enemy extends LivingEntity {
 		}
 	}
 
+	public void reset() {
+		this.markReadyToDelete();
+	}
+
 }

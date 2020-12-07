@@ -183,37 +183,47 @@ public class Game {
 	}
 
 	public void reset() {
-		for (Enemy e : this.enemies) {
-			e.markReadyToDelete();
+		for (Entity e : this.entities) {
+			e.reset();
 		}
 		this.pruneEntities();
-		this.sun.setHealth(100);
 		this.gameActive = true;
 	}
 
 	public void gameOver() {
+		for (Enemy e: this.enemies)
+		{
+			e.markReadyToDelete();
+		}
 		this.pruneEntities();
 		this.gameActive = false;
 	}
 
-	public void tick() {
+	public void
+	tick ()
+	{
 		this.pruneEntities();
 
 		long curNanos = System.nanoTime();
 		double dT = (double)(curNanos - this.lastNanos) / 1000000000.0;
 		this.lastNanos = curNanos;
 
-		for (Entity e : this.entities) {
+		for (Entity e : this.entities)
+		{
 			e.tick(dT);
 		}
 
-		if (Math.random() * this.difficulty.getEnemyRate() > 1.0) {
-			this.spawnEnemy();
-		}
-
-		if (this.sun.getHealth() <= 0)
+		if (this.gameActive)
 		{
-			this.gameOver();
+			if (Math.random() * this.difficulty.getEnemyRate() > 1.0)
+			{
+				this.spawnEnemy();
+			}
+	
+			if (this.sun.getHealth() <= 0)
+			{
+				this.gameOver();
+			}
 		}
 	}
 

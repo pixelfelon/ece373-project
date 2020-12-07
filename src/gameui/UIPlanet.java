@@ -3,30 +3,73 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import gameobjects.Entity;
+import gameobjects.Planet;
+import gameobjects.Vec2D;
 
 public class UIPlanet extends UIEntity
 {
 
-	private static final double radius = 16.0;
-
-	public UIPlanet(JPanel parent, Entity target) {
+	public
+	UIPlanet (JPanel parent, Planet target)
+	{
 		super(parent, target);
+		try
+		{
+			switch (target.spriteIdx)
+			{
+			case 1:
+				image = ImageIO.read( new File(".\\Graphics\\planet1.png"));
+				break;
+			case 2:
+				image = ImageIO.read( new File(".\\Graphics\\planet2.png"));
+				break;
+			case 3:
+				image = ImageIO.read( new File(".\\Graphics\\planet3.png"));
+				break;
+			case 4:
+				image = ImageIO.read( new File(".\\Graphics\\planet4.png"));
+				break;
+			case 5:
+				image = ImageIO.read( new File(".\\Graphics\\planet5.png"));
+				break;
+			case 6:
+				image = ImageIO.read( new File(".\\Graphics\\planet6.png"));
+				break;
+			default:
+				System.err.printf("Could not find planet sprite for choice %d!\n", target.spriteIdx);
+				break;
+			}
+		}
+		catch (IOException e)
+		{
+			System.err.printf("Could not load planet sprite for choice %d!\n", target.spriteIdx);
+		}
 	}
 
 	@Override
 	public void
 	update (Graphics2D g)
 	{
-		Point2D center = this.convertCoords(this.target.getPosition());
-		g.setStroke(new BasicStroke(2));
-		g.setColor(Color.BLUE);
-		g.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2));
+		g.setStroke(new BasicStroke(1));
+		g.setColor(Color.LIGHT_GRAY);
+		this.centerCircle(g, new Vec2D(0.0, 0.0), ((Planet)(this.target)).getRadius());
+		if (this.image == null)
+		{
+			g.setStroke(new BasicStroke(2));
+			g.setColor(Color.BLUE);
+			this.centerCircle(g, this.target.getPosition(), 0.03);
+		}
+		else
+		{
+			this.centerImg(g, this.target.getPosition(), this.image);
+		}
 	}
 
 }
