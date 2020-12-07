@@ -46,7 +46,7 @@ public class UISun extends UIEntity
 		g.draw(new Line2D.Double(pcl, pcr));
 		g.draw(new Line2D.Double(puc, plc));
 		g.setStroke(new BasicStroke(2));
-		g.setColor(Color.RED);
+		g.setColor(Color.YELLOW);
 		Point2D center = this.convertCoords(this.target.getPosition());
 		g.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2));
 	}

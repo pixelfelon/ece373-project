@@ -17,6 +17,10 @@ public class UIFactory {
 		{
 			return new UISun(parent, entity);
 		}
+		if (Enemy.class.isAssignableFrom(entity.getClass()))
+		{
+			return new UIEnemy(parent, entity);
+		}
 		else
 		{
 			return new UIDefault(parent, entity);

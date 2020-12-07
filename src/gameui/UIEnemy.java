@@ -4,18 +4,19 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
 import gameobjects.Entity;
 
-public class UIPlanet extends UIEntity
+public class UIEnemy extends UIEntity
 {
 
-	private static final double radius = 16.0;
+	private static final double radius = 8.0;
 
-	public UIPlanet(JPanel parent, Entity target) {
+	public UIEnemy(JPanel parent, Entity target) {
 		super(parent, target);
 	}
 
@@ -25,8 +26,9 @@ public class UIPlanet extends UIEntity
 	{
 		Point2D center = this.convertCoords(this.target.getPosition());
 		g.setStroke(new BasicStroke(2));
-		g.setColor(Color.BLUE);
-		g.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2));
+		g.setColor(Color.RED);
+		g.draw(new Line2D.Double(center.getX(), center.getY() - radius, center.getX(), center.getY() + radius));
+		g.draw(new Line2D.Double(center.getX() - radius, center.getY(), center.getX() + radius, center.getY()));
 	}
 
 }
