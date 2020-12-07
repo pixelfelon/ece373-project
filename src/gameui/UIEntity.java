@@ -1,6 +1,7 @@
 package gameui;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
@@ -40,8 +41,23 @@ public abstract class UIEntity
 		double y = -vector.getY() * (vmin / 2.0) + (vh / 2.0);
 		return new Point2D.Double(x, y);
 	}
-	public void offSet(int width, int height){
+
+	protected void
+	offSet (int width, int height)
+	{
 		offSetX = width / 2;
 		offSetY = height / 2;
+	}
+
+	protected static void
+	centerImg (Graphics2D g, Point2D p, BufferedImage img)
+	{
+		AffineTransform old = g.getTransform();
+		g.translate(
+			p.getX() - ((double)img.getWidth() / 2.0),
+			p.getY() - ((double)img.getHeight() / 2.0)
+		);
+		g.drawImage(img, 0, 0, null);
+		g.setTransform(old);
 	}
 }

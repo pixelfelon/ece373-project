@@ -58,7 +58,8 @@ public class UIEnemy extends UIEntity
 //		g.setColor(Color.RED);
 //		g.draw(new Line2D.Double(center.getX(), center.getY() - radius, center.getX(), center.getY() + radius));
 //		g.draw(new Line2D.Double(center.getX() - radius, center.getY(), center.getX() + radius, center.getY()));
-		g.drawImage(image, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
+		//g.drawImage(image, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
+		UIEntity.centerImg(g, center, this.image);
 	}
 
 }
