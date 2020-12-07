@@ -3,6 +3,7 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
@@ -10,16 +11,20 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import gameobjects.NoWeapon;
 import gameobjects.Planet;
 import gameobjects.Vec2D;
 
 public class UIPlanet extends UIEntity
 {
 
+	//private Planet planet;
+	
 	public
 	UIPlanet (JPanel parent, Planet target)
 	{
 		super(parent, target);
+		//planet = target;
 		try
 		{
 			switch (target.spriteIdx)
@@ -69,6 +74,19 @@ public class UIPlanet extends UIEntity
 		else
 		{
 			this.centerImg(g, this.target.getPosition(), this.image);
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.PINK);
+			
+//			if(((Planet)(this.target)).getWeapon() != null) {
+//				if(((Planet)(this.target)).getWeapon().getRange() == 0) {g.setColor(Color.WHITE);}
+//				else if(((Planet)(this.target)).getWeapon().getRange() == 1) {g.setColor(Color.ORANGE);}
+//				else if(((Planet)(this.target)).getWeapon().getRange() == 2) {g.setColor(Color.YELLOW);}
+//				else if(((Planet)(this.target)).getWeapon().getRange() == 3) {g.setColor(Color.CYAN);}
+//			}
+			
+			if(((Planet)(this.target)).findClosestEnemy() != null) {
+			this.drawLine(g, this.target.getPosition(), ((Planet)(this.target)).findClosestEnemy().getPosition());
+			}
 		}
 	}
 

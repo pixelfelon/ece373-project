@@ -3,12 +3,14 @@ package gameui;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 import gameobjects.Entity;
+import gameobjects.Planet;
 import gameobjects.Vec2D;
 
 public abstract class UIEntity
@@ -78,5 +80,12 @@ public abstract class UIEntity
 		Point2D p = this.convertCoords(v);
 		radius = this.scaleCoord(radius);
 		g.draw(new Ellipse2D.Double(p.getX() - radius, p.getY() - radius, radius * 2.0, radius * 2.0));
+	}
+	
+	protected void
+	drawLine (Graphics2D g, Vec2D v, Vec2D ve) {
+		Point2D p = this.convertCoords(v);
+		Point2D e = this.convertCoords(ve);
+		g.draw(new Line2D.Double(p.getX(), p.getY(), e.getX(), e.getY()));
 	}
 }

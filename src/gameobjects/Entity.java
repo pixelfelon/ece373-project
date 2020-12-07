@@ -36,5 +36,6 @@ public abstract class Entity {
 	protected double distanceTo(Entity other) {
 		return this.pos.distanceTo(other.getPosition());
 	}
-
+	
+	
 }

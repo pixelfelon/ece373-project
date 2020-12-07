@@ -490,7 +490,7 @@ public class SolarDefenderGUI extends JFrame {
 				}
 				else if(e.getSource().equals(planet6WeaponSelect)) {
 					if(planet6WeaponSelect.getSelectedItem() == "No Weapon") {
-						planet4.setWeapon(new NoWeapon());
+						planet6.setWeapon(new NoWeapon());
 					}
 					else if(planet6WeaponSelect.getSelectedItem() == "Phalanx") {
 						planet6.setWeapon(new Phalanx());
@@ -509,6 +509,7 @@ public class SolarDefenderGUI extends JFrame {
 				}
 				
 				else if(e.getSource().equals(planetConfirm)) {
+					checkSelection();
 					double vh = gameScreen.getHeight();
 					double vw = gameScreen.getWidth();
 					System.out.printf("Screen h/w %f %f\n", vh, vw);
@@ -538,6 +539,130 @@ public class SolarDefenderGUI extends JFrame {
 					System.out.printf("UNHANDLED EVENT from %h", e.getSource());
 				}
 
+		    }
+		    public void checkSelection() {
+		    	
+		    	if (planet1Radio.isSelected()) {
+					game.addPlanet(planet1);
+					
+					if(planet1WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet1.setWeapon(new NoWeapon());
+					}
+					else if(planet1WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet1.setWeapon(new Phalanx());
+					}
+					else if(planet1WeaponSelect.getSelectedItem() == "Missile") {
+						planet1.setWeapon(new Missile());
+					}
+					else if(planet1WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet1.setWeapon(new RailGun());
+					}
+				}
+				else {
+					game.removePlanet(planet1);
+				}
+		    	
+		    	if (planet2Radio.isSelected()) {
+					game.addPlanet(planet2);
+					
+					if(planet2WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet2.setWeapon(new NoWeapon());
+					}
+					else if(planet2WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet2.setWeapon(new Phalanx());
+					}
+					else if(planet2WeaponSelect.getSelectedItem() == "Missile") {
+						planet2.setWeapon(new Missile());
+					}
+					else if(planet2WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet2.setWeapon(new RailGun());
+					}
+				}
+				else {
+					game.removePlanet(planet2);
+				}
+		    	
+		    	if (planet3Radio.isSelected()) {
+					game.addPlanet(planet3);
+					
+					if(planet3WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet3.setWeapon(new NoWeapon());
+					}
+					else if(planet3WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet3.setWeapon(new Phalanx());
+					}
+					else if(planet3WeaponSelect.getSelectedItem() == "Missile") {
+						planet3.setWeapon(new Missile());
+					}
+					else if(planet3WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet3.setWeapon(new RailGun());
+					}
+					
+				}
+				else {
+					game.removePlanet(planet3);
+				}
+		    	
+		    	if (planet4Radio.isSelected()) {
+					game.addPlanet(planet4);
+					
+					if(planet4WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet4.setWeapon(new NoWeapon());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet4.setWeapon(new Phalanx());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Missile") {
+						planet4.setWeapon(new Missile());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet4.setWeapon(new RailGun());
+					}
+				}
+				else {
+					game.removePlanet(planet4);
+				}
+		    	
+		    	if (planet5Radio.isSelected()) {
+					game.addPlanet(planet5);
+					
+					if(planet5WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet5.setWeapon(new NoWeapon());
+					}
+					else if(planet5WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet5.setWeapon(new Phalanx());
+					}
+					else if(planet5WeaponSelect.getSelectedItem() == "Missile") {
+						planet5.setWeapon(new Missile());
+					}
+					else if(planet5WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet5.setWeapon(new RailGun());
+					}
+				}
+				else {
+					game.removePlanet(planet5);
+				}
+		    	
+		    	if (planet6Radio.isSelected()) {
+					game.addPlanet(planet6);
+					
+					if(planet6WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet6.setWeapon(new NoWeapon());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet6.setWeapon(new Phalanx());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Missile") {
+						planet6.setWeapon(new Missile());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet6.setWeapon(new RailGun());
+					}
+					System.out.println(planet6WeaponSelect.getSelectedItem());
+				}
+				else {
+					game.removePlanet(planet6);
+				}
 		    }
 		}
 

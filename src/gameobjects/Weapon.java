@@ -2,7 +2,7 @@ package gameobjects;
 
 public abstract class Weapon {
 	
-	String name;
+	String name = "NoWeapon";
 	protected int damage;
 	protected int attackSpeed;
 	protected int reloadTimer = 0;
