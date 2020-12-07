@@ -8,7 +8,9 @@ import java.util.Collections;
 public class Game {
 
 	private HashSet<Entity> entities;
+	private HashSet<Entity> newEntities;
 	private HashSet<Enemy> enemies;
+	private Set<Enemy> enemiesView;
 	private ArrayList<Planet> planets;
 	private Star sun;
 
@@ -22,17 +24,19 @@ public class Game {
 	private static final int enemyLimit = 5;
 
 	public Game() {
-		//this(5, GameDifficulty.NORMAL);
+		this(GameDifficulty.NORMAL);
 	}
 	
 	public Game(GameDifficulty difficulty) {
 		this.difficulty = difficulty;
 		this.viewportWidth = 500;
 		this.viewportHeight = 500;
+
 		this.entities = new HashSet<Entity>();
+		this.newEntities = new HashSet<Entity>();
 		this.enemies = new HashSet<Enemy>();
 		this.planets = new ArrayList<Planet>();
-		Set<Enemy> enemiesView = Collections.unmodifiableSet(this.enemies);
+		this.enemiesView = Collections.unmodifiableSet(this.enemies);
 
 		this.sun = new Star();
 		this.entities.add(this.sun);
@@ -41,17 +45,7 @@ public class Game {
 	}
 	
 	public Game(int planets, GameDifficulty difficulty) {
-		this.difficulty = difficulty;
-		this.viewportWidth = 500;
-		this.viewportHeight = 500;
-
-		this.entities = new HashSet<Entity>();
-		this.enemies = new HashSet<Enemy>();
-		this.planets = new ArrayList<Planet>();
-		Set<Enemy> enemiesView = Collections.unmodifiableSet(this.enemies);
-
-		this.sun = new Star();
-		this.entities.add(this.sun);
+		this(difficulty);
 
 		for (int i = 0; i < planets; i++) {
 			Planet planet = new Planet(0.3 + 0.5 * ((double)i / (double)planets), enemiesView);
@@ -62,8 +56,7 @@ public class Game {
 				case 3: newGun = new Missile(); break;
 			}
 			//planet.setWeapon(newGun); //testing weapon
-			this.planets.add(planet);
-			this.entities.add(planet);
+			this.addEntity(planet);
 		}
 
 		this.reset();
@@ -77,6 +70,14 @@ public class Game {
 		return this.entities;
 	}
 
+	public HashSet<Entity> getNewEntities() {
+		return this.newEntities;
+	}
+
+	public void clearNewEntities() {
+		this.newEntities.clear();
+	}
+
 	public HashSet<Enemy> getEnemies() {
 		return this.enemies;
 	}
@@ -84,12 +85,43 @@ public class Game {
 	public ArrayList<Planet> getPlanets() {
 		return this.planets;
 	}
+
+	private void addEntity(Entity entity) {
+		this.entities.add(entity);
+		this.newEntities.add(entity);
+		if (Planet.class.isAssignableFrom(entity.getClass()))
+		{
+			this.planets.add((Planet)entity);
+		}
+		if (Enemy.class.isAssignableFrom(entity.getClass()))
+		{
+			this.enemies.add((Enemy)entity);
+		}
+	}
+
+	private void removeEntity(Entity entity) {
+		this.entities.remove(entity);
+		this.newEntities.remove(entity);
+		if (Planet.class.isAssignableFrom(entity.getClass()))
+		{
+			this.planets.remove((Planet)entity);
+		}
+		if (Enemy.class.isAssignableFrom(entity.getClass()))
+		{
+			this.enemies.remove((Enemy)entity);
+		}
+	}
 	
 	public void addPlanet(Planet planet) {
-		planets.add(planet);
+		if (this.planets.contains(planet))
+		{
+			this.planets.remove(planet);
+		}
+		planet.setEnemies(this.enemiesView);
+		this.addEntity(planet);
 	}
 	public void removePlanet(Planet planet) {
-		planets.remove(planet);
+		this.removeEntity(planet);
 	}
 
 	public Star getSun() {
@@ -133,8 +165,7 @@ public class Game {
 		if (this.enemies.size() <= enemyLimit) {
 			Enemy enemy = new Enemy(startPos, this.sun);
 			enemy.setSpeed(speed);
-			this.entities.add(enemy);
-			this.enemies.add(enemy);
+			this.addEntity(enemy);
 			System.out.printf("Spawning enemy %h at theta=%.1fdeg\n", enemy, theta * 180.0 / Math.PI);
 		}
 	}
@@ -146,9 +177,8 @@ public class Game {
 				toDelete.add(e);
 			}
 		}
-		for (Entity e : toDelete) {
-			this.entities.remove(e);
-			this.enemies.remove(e); // only has an effect if e is an Enemy
+		for (Entity entity : toDelete) {
+			this.removeEntity(entity);
 		}
 	}
 
@@ -156,7 +186,7 @@ public class Game {
 		for (Enemy e : this.enemies) {
 			e.markReadyToDelete();
 		}
-		pruneEntities();
+		this.pruneEntities();
 		this.sun.setHealth(100);
 		this.gameActive = true;
 	}

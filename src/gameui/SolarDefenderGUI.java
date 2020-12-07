@@ -1,6 +1,7 @@
 package gameui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,8 +17,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -35,9 +38,8 @@ import gameobjects.Weapon;
 public class SolarDefenderGUI extends JFrame {
 	
 		private Game game = new Game();
-		int difficulty;
-		int planets = 6;
-		private ArrayList<Planet> planetsArray;
+		private JPanel content = new JPanel();
+		private CardLayout layout = new CardLayout();
 		
 		private Image background = Toolkit.getDefaultToolkit().getImage("solar_system_background.jpg");
 		//for setMinimum parameter
@@ -48,7 +50,7 @@ public class SolarDefenderGUI extends JFrame {
 		private JPanel mainScreen = new JPanel();
 		private JPanel difficultyScreen = new JPanel();
 		private	JPanel planetSelectScreen = new JPanel();
-		private JPanel gameScreen = new JPanel();
+		private JLayeredPane gameScreen = new JLayeredPane();
 		private JPanel highScoreScreen = new JPanel();
 		
 		//Main Screen
@@ -82,6 +84,7 @@ public class SolarDefenderGUI extends JFrame {
 		
 		//Game Screen
 		private JButton pauseMenuButton = new JButton("Menu");
+		private GamePanel gamePanel = new GamePanel(this.game);
 	
 		//General Buttons
 		private JButton mainMenuButton = new JButton("Main Menu");
@@ -101,28 +104,30 @@ public class SolarDefenderGUI extends JFrame {
 		private JLabel planet4Label = new JLabel(planet4Icon);
 		private JLabel planet5Label = new JLabel(planet5Icon);
 		private JLabel planet6Label = new JLabel(planet6Icon);
-		Planet planet1 = new Planet(0.3 + 0.5 * ((double)0 / (double)planets));
-		Planet planet2 = new Planet(0.3 + 0.5 * ((double)1 / (double)planets));
-		Planet planet3 = new Planet(0.3 + 0.5 * ((double)2 / (double)planets));
-		Planet planet4 = new Planet(0.3 + 0.5 * ((double)3 / (double)planets));
-		Planet planet5 = new Planet(0.3 + 0.5 * ((double)4 / (double)planets));
-		Planet planet6 = new Planet(0.3 + 0.5 * ((double)5 / (double)planets));
+		Planet planet1 = new Planet(0.3 + 0.5 * (1.0 / 6.0));
+		Planet planet2 = new Planet(0.3 + 0.5 * (1.5 / 6.0));
+		Planet planet3 = new Planet(0.3 + 0.5 * (2.0 / 6.0));
+		Planet planet4 = new Planet(0.3 + 0.5 * (3.0 / 6.0));
+		Planet planet5 = new Planet(0.3 + 0.5 * (3.5 / 6.0));
+		Planet planet6 = new Planet(0.3 + 0.5 * (4.0 / 6.0));
 		Weapon weapon1 = null;
 		
-		public SolarDefenderGUI(){
-			
+		public SolarDefenderGUI() {
 			super("Solar Defenders");
-		    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		   
-		    planets = 0;
-		    planetsArray = new ArrayList<Planet>();
+		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    this.setLayout(layout);
+		    this.add(mainScreen, "MAIN");
+		    this.add(difficultyScreen, "DIFFICULTY");
+		    this.add(planetSelectScreen, "PLANETS");
+		    this.add(gameScreen, "GAME");
+		    this.add(highScoreScreen, "HIGHSCORES");
+
 		    BuildMainScreen();
 		    BuildDiffScreen();
 		    BuildPlanetSelectScreen();
 		    BuildGameScreen();
 		    //getContentPane().setLayout(new BorderLayout());
-		    changePanel(mainScreen);
-		    
+		    changePanel("MAIN");
 		}
 		
 		public void paintComponent(Graphics g) {
@@ -280,22 +285,25 @@ public class SolarDefenderGUI extends JFrame {
 
 		private void BuildGameScreen(){
 			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
-			gameScreen.setLayout(null);
+			//gameScreen.setBounds(this.getBounds());
+			gameScreen.setLayout(new BorderLayout());
+			pauseMenuButton.addActionListener(new ButtonListener());
 			
 			sunLabel.setBounds(450, 450, 50, 50);
 			pauseMenuButton.setBounds(0, 0, 125, 25);
-			
-			gameScreen.add(sunLabel);
-			gameScreen.add(pauseMenuButton);
-			gameScreen.add(panel);
+			//gamePanel.setBounds(0, 0, 800, 800);
+
+			gameScreen.add(pauseMenuButton, 0);
+			gameScreen.add(sunLabel, 1);
+			gameScreen.add(panel, 3);
+			gameScreen.add(gamePanel, 2);
 			this.pack();
 		}
 		
-		private void changePanel(JPanel panel) {
-		    getContentPane().removeAll();
-		    getContentPane().add(panel, BorderLayout.CENTER);
-		    getContentPane().doLayout();
-		    update(getGraphics());
+		private void changePanel(String panel) {
+			this.layout.show(this.getContentPane(), panel);
+		    this.getContentPane().doLayout();
+		    this.update(this.getGraphics());
 		}
 		
 		public Dimension getScreenSize() {
@@ -317,11 +325,11 @@ public class SolarDefenderGUI extends JFrame {
 				//Main Menu Screen
 				if(e.getSource().equals(sButton))
 				{
-					changePanel(difficultyScreen);
+					changePanel("DIFFICULTY");
 				}
 				else if(e.getSource().equals(hsButton))
 				{
-					
+					//changePanel("HIGHSCORES");
 				}
 				else if(e.getSource().equals(eButton))
 				{
@@ -334,111 +342,74 @@ public class SolarDefenderGUI extends JFrame {
 				
 				//Difficulty Screen
 				else if(e.getSource().equals(easyButton))
-				{
-					difficulty = 1;
-					Game intitializeGame = new Game(GameDifficulty.valueOf("EASY")); 
-					game = intitializeGame;
-					changePanel(planetSelectScreen);
+				{ 
+					game.setDifficulty(GameDifficulty.EASY);
+					changePanel("PLANETS");
 				}
 				else if(e.getSource().equals(medButton))
 				{
-					difficulty = 2;
-					Game intitializeGame = new Game(GameDifficulty.valueOf("NORMAL")); 
-					game = intitializeGame;
-					changePanel(planetSelectScreen);
+					game.setDifficulty(GameDifficulty.NORMAL);
+					changePanel("PLANETS");
 				}
 				else if(e.getSource().equals(hardButton))
 				{
-					difficulty = 3;
-					Game intitializeGame = new Game(GameDifficulty.valueOf("HARD")); 
-					game = intitializeGame;
-					changePanel(planetSelectScreen);
+					game.setDifficulty(GameDifficulty.HARD);
+					changePanel("PLANETS");
 				}
 				//Planet Select Screen
 				else if(e.getSource() == planet1Radio) {
-					if(check1 == false) {
-						planets++;
-						//planetsArray.add(0, planet1);
-						check1 = true;
+					if (planet1Radio.isSelected()) {
+						game.addPlanet(planet1);
 					}
-					else if(check1 == true){
-						planets--;
-						//planetsArray.remove(0);
-						check1 = false;
+					else {
+						game.removePlanet(planet1);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
-					
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet2Radio)) {
-					if(check2 == false) {
-						planets++;
-						//planetsArray.add(1, planet2);
-						check2 = true;
+					if (planet2Radio.isSelected()) {
+						game.addPlanet(planet2);
 					}
-					else if(check2 == true){
-						planets--;
-						//planetsArray.remove(1);
-						check2 = false;
+					else {
+						game.removePlanet(planet2);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet3Radio)) {
-					if(check3 == false) {
-						planets++;
-						//planetsArray.add(2, planet3);
-						check3 = true;
+					if (planet3Radio.isSelected()) {
+						game.addPlanet(planet3);
 					}
-					else if(check3 == true){
-						planets--;
-						//planetsArray.remove(2);
-						check3 = false;
+					else {
+						game.removePlanet(planet3);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet4Radio)) {
-					if(check4 == false) {
-						planets++;
-						//planetsArray.add(3, planet4);
-						check4 = true;
+					if (planet4Radio.isSelected()) {
+						game.addPlanet(planet4);
 					}
-					else if(check4 == true){
-						planets--;
-						//planetsArray.remove(3);
-						check4 = false;
+					else {
+						game.removePlanet(planet4);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet5Radio)) {
-					if(check5 == false) {
-						planets++;
-						//planetsArray.add(4, planet5);
-						check5 = true;
+					if (planet5Radio.isSelected()) {
+						game.addPlanet(planet5);
 					}
-					else if(check5 == true){
-						planets--;
-						//planetsArray.remove(4);
-						check5 = false;
+					else {
+						game.removePlanet(planet5);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet6Radio)) {
-					if(check6 == false) {
-						planets++;
-						//planetsArray.add(5, planet6);
-						check6 = true;
+					if (planet6Radio.isSelected()) {
+						game.addPlanet(planet6);
 					}
-					else if(check6 == true){
-						planets--;
-						//planetsArray.remove(5);
-						check6 = false;
+					else {
+						game.removePlanet(planet6);
 					}
-					System.out.println(planets);
-					//System.out.println(planetsArray.size());
+					System.out.println(game.getPlanets());
 				}
 				else if(e.getSource().equals(planet1WeaponSelect)) {
 					if(planet1WeaponSelect.getSelectedItem() == "No Weapon") {
@@ -468,56 +439,41 @@ public class SolarDefenderGUI extends JFrame {
 					else if(planet2WeaponSelect.getSelectedItem() == "Rail Gun") {
 						planet2.setWeapon(new RailGun());
 					}
-					System.out.println(planet1WeaponSelect.getSelectedItem());
+					System.out.println(planet2WeaponSelect.getSelectedItem());
 				}
 				else if(e.getSource().equals(planet3WeaponSelect)) {
-					if(planet2WeaponSelect.getSelectedItem() == "No Weapon") {
-						planet2.setWeapon(new NoWeapon());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Phalanx") {
-						planet2.setWeapon(new Phalanx());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Missile") {
-						planet2.setWeapon(new Missile());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Rail Gun") {
-						planet2.setWeapon(new RailGun());
-					}
-					System.out.println(planet1WeaponSelect.getSelectedItem());
-				}
-				else if(e.getSource().equals(planet4WeaponSelect)) {
-					if(planet2WeaponSelect.getSelectedItem() == "No Weapon") {
-						planet2.setWeapon(new NoWeapon());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Phalanx") {
-						planet2.setWeapon(new Phalanx());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Missile") {
-						planet2.setWeapon(new Missile());
-					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Rail Gun") {
-						planet2.setWeapon(new RailGun());
-					}
-					System.out.println(planet1WeaponSelect.getSelectedItem());
-				}
-				else if(e.getSource().equals(planet5WeaponSelect)) {
 					if(planet3WeaponSelect.getSelectedItem() == "No Weapon") {
 						planet3.setWeapon(new NoWeapon());
 					}
-					else if(planet2WeaponSelect.getSelectedItem() == "Phalanx") {
+					else if(planet3WeaponSelect.getSelectedItem() == "Phalanx") {
 						planet3.setWeapon(new Phalanx());
 					}
 					else if(planet3WeaponSelect.getSelectedItem() == "Missile") {
-						planet2.setWeapon(new Missile());
+						planet3.setWeapon(new Missile());
 					}
 					else if(planet3WeaponSelect.getSelectedItem() == "Rail Gun") {
 						planet3.setWeapon(new RailGun());
 					}
-					System.out.println(planet1WeaponSelect.getSelectedItem());
+					System.out.println(planet3WeaponSelect.getSelectedItem());
 				}
-				else if(e.getSource().equals(planet6WeaponSelect)) {
+				else if(e.getSource().equals(planet4WeaponSelect)) {
 					if(planet4WeaponSelect.getSelectedItem() == "No Weapon") {
 						planet4.setWeapon(new NoWeapon());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet4.setWeapon(new Phalanx());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Missile") {
+						planet4.setWeapon(new Missile());
+					}
+					else if(planet4WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet4.setWeapon(new RailGun());
+					}
+					System.out.println(planet4WeaponSelect.getSelectedItem());
+				}
+				else if(e.getSource().equals(planet5WeaponSelect)) {
+					if(planet5WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet5.setWeapon(new NoWeapon());
 					}
 					else if(planet5WeaponSelect.getSelectedItem() == "Phalanx") {
 						planet5.setWeapon(new Phalanx());
@@ -528,22 +484,56 @@ public class SolarDefenderGUI extends JFrame {
 					else if(planet5WeaponSelect.getSelectedItem() == "Rail Gun") {
 						planet5.setWeapon(new RailGun());
 					}
-					System.out.println(planet1WeaponSelect.getSelectedItem());
+					System.out.println(planet5WeaponSelect.getSelectedItem());
+				}
+				else if(e.getSource().equals(planet6WeaponSelect)) {
+					if(planet6WeaponSelect.getSelectedItem() == "No Weapon") {
+						planet4.setWeapon(new NoWeapon());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Phalanx") {
+						planet6.setWeapon(new Phalanx());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Missile") {
+						planet6.setWeapon(new Missile());
+					}
+					else if(planet6WeaponSelect.getSelectedItem() == "Rail Gun") {
+						planet6.setWeapon(new RailGun());
+					}
+					System.out.println(planet6WeaponSelect.getSelectedItem());
 				}
 				
 				else if (e.getSource().equals(planetToDifficulty)) {
-					changePanel(difficultyScreen);
+					changePanel("DIFFICULTY");
 				}
 				
 				else if(e.getSource().equals(planetConfirm)) {
+					double vh = gameScreen.getHeight();
+					double vw = gameScreen.getWidth();
+					System.out.printf("Screen h/w %f %f\n", vh, vw);
 					System.out.println("planetConfirm");
-					changePanel(gameScreen);
+					changePanel("GAME");
+					gamePanel.startSimulation();
+				}
+
+				else if(e.getSource().equals(pauseMenuButton))
+				{
+					gamePanel.stopSimulation();
+					changePanel("MAIN");
 				}
 				
 				//General Buttons
 				else if(e.getSource().equals(mainMenuButton))
 				{
-					changePanel(mainScreen);
+					changePanel("MAIN");
+					if (gamePanel.isRunning())
+					{
+						gamePanel.stopSimulation();
+					}
+				}
+
+				else
+				{
+					System.out.printf("UNHANDLED EVENT from %h", e.getSource());
 				}
 
 		    }
