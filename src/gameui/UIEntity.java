@@ -2,6 +2,7 @@ package gameui;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -13,6 +14,8 @@ public abstract class UIEntity
 
 	protected Entity target;
 	protected JPanel parent;
+	protected BufferedImage image;
+	double offSetX, offSetY;
 
 	public
 	UIEntity (JPanel parent, Entity target)
@@ -37,5 +40,8 @@ public abstract class UIEntity
 		double y = -vector.getY() * (vmin / 2.0) + (vh / 2.0);
 		return new Point2D.Double(x, y);
 	}
-
+	public void offSet(int width, int height){
+		offSetX = width / 2;
+		offSetY = height / 2;
+	}
 }

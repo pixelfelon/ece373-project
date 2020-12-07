@@ -90,7 +90,7 @@ public class SolarDefenderGUI extends JFrame {
 		private JButton mainMenuButton = new JButton("Main Menu");
 		
 		//Game Objects
-		ImageIcon sunIcon = new ImageIcon(".\\Graphics\\sun.png");
+		ImageIcon sunIcon = new ImageIcon();
 		ImageIcon planet1Icon = new ImageIcon(".\\Graphics\\planet1.png");
 		ImageIcon planet2Icon = new ImageIcon(".\\Graphics\\planet2.png");
 		ImageIcon planet3Icon = new ImageIcon(".\\Graphics\\planet3.png");
