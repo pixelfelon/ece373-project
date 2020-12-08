@@ -111,7 +111,7 @@ public class SolarDefenderGUI extends JFrame {
 		Weapon weapon1 = null;
 		
 		public SolarDefenderGUI() {
-			super("Solar Defenders");
+			super("Solar Defender");
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setLayout(layout);
 		    this.add(mainScreen, "MAIN");
