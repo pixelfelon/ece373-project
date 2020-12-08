@@ -1,5 +1,7 @@
 package gameui;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 public class MilestoneDriver
@@ -10,7 +12,8 @@ public class MilestoneDriver
 	{
 		SolarDefenderGUI frame = new SolarDefenderGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(1000, 1000);
+	    frame.setSize(800, 800);
+	    frame.setMinimumSize(new Dimension(450, 450));
 	    frame.setVisible(true);
 	}
 

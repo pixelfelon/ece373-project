@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -11,6 +12,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +24,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import gameobjects.Game;
 import gameobjects.GameDifficulty;
@@ -36,7 +41,7 @@ public class SolarDefenderGUI extends JFrame {
 		private Game game = new Game();
 		private CardLayout layout = new CardLayout();
 		
-		private Image background = Toolkit.getDefaultToolkit().getImage("solar_system_background.jpg");
+		private Image background = Toolkit.getDefaultToolkit().getImage("space_background.jpg");
 		//for setMinimum parameter
 		private Dimension screenSize = new Dimension(720, 542); 
 		String[] weapons = {"No Weapon", "Phalanx", "Missile", "RailGun"};
@@ -131,7 +136,7 @@ public class SolarDefenderGUI extends JFrame {
 		    BuildDiffScreen();
 		    BuildPlanetSelectScreen();
 		    BuildGameScreen();
-		    BuildHighScoresScreen();
+		    BuildScoresScreen();
 		    //getContentPane().setLayout(new BorderLayout());
 		    changePanel("MAIN");
 		}
@@ -139,25 +144,49 @@ public class SolarDefenderGUI extends JFrame {
 		public void paintComponent(Graphics g) {
 			   super.paintComponents(g);
 			   g.drawImage(background, 0, 0, null);
-			   
+			   System.out.println("painting background");
 			}
 
-			
+		
 		private void BuildMainScreen() {
 			
-			
-			//JLabel icon = new JLabel(new ImageIcon(".\\Graphics\\solar_system_background.jpg")); 
 			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
-			Rectangle f = this.getBounds();
-			//panel.setSize(super.getWidth(), super.getHeight());
-			//panel.setBounds(400, 200, 800, 500);
+
+			JPanel sshItems = new JPanel();
+			JPanel exitItem = new JPanel();
+			JPanel menuItems = new JPanel();
 			
-			//BackgroundImage img = new BackgroundImage(mainScreen);
-			System.out.println(super.getSize() + " " + f.getHeight());
-			mainScreen.setLayout(null);
+			sshItems.setLayout(new BoxLayout(sshItems, BoxLayout.X_AXIS));
+	
+			menuItems.setLayout(new BoxLayout(menuItems, BoxLayout.Y_AXIS));
+			
+			sButton.addActionListener(new ButtonListener());
+		    hsButton.addActionListener(new ButtonListener());
+		    eButton.addActionListener(new ButtonListener());
+			
+			sshItems.add(sButton);
+			sshItems.add(Box.createRigidArea(new Dimension(15, 0)));
+			sshItems.add(hsButton);
+			sshItems.setBorder(BorderFactory.createEmptyBorder(175,10,10,10));
+			
+			exitItem.add(eButton);
+			//exitItem.setBorder(BorderFactory.createEmptyBorder(250,10,10,10));
+			
+			
+			menuItems.add(sshItems);
+			menuItems.add(exitItem);
+			
+			mainScreen.add(menuItems);
+			//panel.add(menuItems);
+			//mainScreen.add(sshItems);
+			//mainScreen.add(exitItem);
+			
+			//mainScreen.add(panel);
+			
+		/*	mainScreen.setLayout(null);
 			
 		    //Main Screen
-			titleGIF.setBounds(290,150,400, 75);
+			titleGIF.setBounds(290, 150, 400, 75);
 		    sButton.setBounds(350, 300, 125, 25);
 		    hsButton.setBounds(500, 300, 125, 25);
 		    eButton.setBounds(425, 375, 125, 25);
@@ -165,54 +194,83 @@ public class SolarDefenderGUI extends JFrame {
 		    sButton.addActionListener(new ButtonListener());
 		    hsButton.addActionListener(new ButtonListener());
 		    eButton.addActionListener(new ButtonListener());
-		    
+
 		    mainScreen.add(titleGIF);
 		    mainScreen.add(sButton);
 		    mainScreen.add(hsButton);
 		    mainScreen.add(eButton);
-		    mainScreen.add(panel);
-		   // super.add(new JLabel(new ImageIcon(".\\Graphics\\solar_system_background.jpg")));
+		    mainScreen.add(panel);*/
 		    
 		    this.pack();
 		}
 		
 		private void BuildDiffScreen() {
 			
-			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
-			difficultyScreen.setLayout(null);
+			//BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
+			//difficultyScreen.setLayout(null);
 			
-		    easyButton.setBounds(425, 200, 125, 30);
+			JPanel options = new JPanel();
+			
+			options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
+			
+			//options.setMinimumSize(new Dimension(200, 100));
+			
+		   // easyButton.setBounds(425, 200, 125, 30);
 		    easyButton.setBackground(Color.GREEN);
-		    medButton.setBounds(425, 255, 125, 30);
+		    easyButton.setMinimumSize(new Dimension(200, 100));
+		   // easyButton.setPreferredSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
+		   // medButton.setBounds(425, 255, 125, 30);
 		    medButton.setBackground(Color.ORANGE);
-		    hardButton.setBounds(425, 310, 125, 30);
+		  //  medButton.setSize(125, 30);
+		   // hardButton.setBounds(425, 310, 125, 30);
 		    hardButton.setBackground(Color.RED);
-		    mainMenuButton.setBounds(425, 400, 125, 30);
+		 //   hardButton.setSize(125, 30);
+		   // mainMenuButton.setBounds(425, 400, 125, 30);
 		    
 		    easyButton.addActionListener(new ButtonListener());
 		    medButton.addActionListener(new ButtonListener());
 		    hardButton.addActionListener(new ButtonListener());
 		    mainMenuButton.addActionListener(new ButtonListener());
 		    
-		    difficultyScreen.add(easyButton);
+		    
+		    options.add(easyButton);
+		    options.add(Box.createRigidArea(new Dimension(0, 15)));
+		    options.add(medButton);
+		    options.add(Box.createRigidArea(new Dimension(0, 15)));
+		    options.add(hardButton);
+		    options.add(Box.createRigidArea(new Dimension(0, 25)));
+		    options.add(mainMenuButton);
+		    options.setBorder(BorderFactory.createEmptyBorder(175,10,10,10));
+		    
+		    difficultyScreen.add(options);
+		    
+		  /*  difficultyScreen.add(easyButton);
 		    difficultyScreen.add(medButton);
 		    difficultyScreen.add(hardButton);
 		    difficultyScreen.add(mainMenuButton);
-		    difficultyScreen.add(panel);
+		    difficultyScreen.add(panel);*/
 		    this.pack();
 		}
 		
-		private void BuildHighScoresScreen() {
+		private void BuildScoresScreen() {
 			
 			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
+			
+			JLabel scores = new JLabel();
+			scores.setText("Score: 555 Name: ");
+			scores.setForeground(Color.GREEN);
+			scores.setFont(new Font("Serif", Font.PLAIN, 25));
+			scores.setBounds(400, 250, 500, 25);
+			
+			highScoreScreen.add(scores);
+			
 			highScoreScreen.setLayout(null);
 			
-			hsToMain.setBounds(350, 850, 125, 25);
-			
+			hsToMain.setBounds(0, 0, 125, 25);
 			hsToMain.addActionListener(new ButtonListener());
 			
 			highScoreScreen.add(hsToMain);
-			difficultyScreen.add(panel);
+			highScoreScreen.add(panel);
 			this.pack();
 			
 		}
@@ -257,8 +315,8 @@ public class SolarDefenderGUI extends JFrame {
 			planet5WeaponSelect.setBounds(250, 490, 100, 20);
 			planet6WeaponSelect.setBounds(250, 590, 100, 20);
 			
-			planetToDifficulty.setBounds(350, 850, 125, 25);
-			planetConfirm.setBounds(500, 850, 125, 25);
+			planetToDifficulty.setBounds(350, 650, 125, 25);
+			planetConfirm.setBounds(500, 650, 125, 25);
 			
 			planet1Radio.addActionListener(new ButtonListener()); 
 			planet2Radio.addActionListener(new ButtonListener());
@@ -320,6 +378,7 @@ public class SolarDefenderGUI extends JFrame {
 			gameScreen.add(gamePanel, 2);
 			this.pack();
 		}
+		
 		
 		private void changePanel(String panel) {
 			this.layout.show(this.getContentPane(), panel);
