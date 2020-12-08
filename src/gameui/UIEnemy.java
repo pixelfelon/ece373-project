@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 import gameobjects.Enemy;
 
@@ -14,7 +13,7 @@ public class UIEnemy extends UIEntity
 {
 
 	public
-	UIEnemy (JPanel parent, Enemy target)
+	UIEnemy (GamePanel parent, Enemy target)
 	{
 		super(parent, target);
 		int randomNum = ThreadLocalRandom.current().nextInt(3) + 1;
@@ -45,5 +44,5 @@ public class UIEnemy extends UIEntity
 	{
 		this.centerImg(g, this.target.getPosition(), this.image);
 	}
-
+	
 }

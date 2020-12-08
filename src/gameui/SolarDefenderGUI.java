@@ -29,7 +29,6 @@ import gameobjects.Phalanx;
 import gameobjects.Planet;
 import gameobjects.RailGun;
 
-
 public class SolarDefenderGUI extends JFrame
 {
 

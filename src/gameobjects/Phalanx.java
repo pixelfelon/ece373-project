@@ -7,6 +7,7 @@ public class Phalanx extends Weapon{
 		damage = 1;
 		attackSpeed = 3;
 		range = 1;
+		fireTime = reloadTimer - 0.1;
 	}
 
 }
