@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 import gameobjects.Enemy;
 

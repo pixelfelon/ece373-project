@@ -7,11 +7,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JPanel;
-
 import gameobjects.Entity;
-import gameobjects.Game;
-import gameobjects.Planet;
 import gameobjects.Vec2D;
 
 public abstract class UIEntity

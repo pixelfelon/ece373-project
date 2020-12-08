@@ -10,9 +10,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import gameobjects.Star;
 import gameobjects.Vec2D;
@@ -78,8 +75,6 @@ public class UISun extends UIEntity
 		g.drawString("HEALTH " + ((Star)(this.target)).getHealth(), (int)sh.getX(), (int)sh.getY());
 		g.setColor(Color.WHITE);
 		g.drawString("SCORE: " + this.parent.getGame().getScore(), (int)scoreCounter.getX(), (int)scoreCounter.getY());
-		
-		System.out.printf("health %d\n", ((Star)(this.target)).getHealth());
 	}
 
 }

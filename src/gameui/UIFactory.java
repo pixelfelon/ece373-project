@@ -1,7 +1,5 @@
 package gameui;
 
-import javax.swing.JPanel;
-
 import gameobjects.*;
 
 public class UIFactory {

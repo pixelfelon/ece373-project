@@ -3,15 +3,12 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
-import gameobjects.NoWeapon;
 import gameobjects.Planet;
 import gameobjects.Vec2D;
 
@@ -21,12 +18,12 @@ public class UIPlanet extends UIEntity
 	private double fireTime;
 	private double attackSpeed;
 	double randomNum = ThreadLocalRandom.current().nextDouble(0.5) + 0.1;
-	
+
 	public
 	UIPlanet (GamePanel parent, Planet target)
 	{
 		super(parent, target);
-		
+
 		try
 		{
 			switch (target.spriteIdx)

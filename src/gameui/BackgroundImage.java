@@ -1,6 +1,5 @@
 package gameui;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -23,16 +22,13 @@ public class BackgroundImage extends JPanel
 	BackgroundImage (Image img)
 	{
 		this.img = img;
-		Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-		setPreferredSize(size);
-		setSize(size);
-		setLayout(null);
 	}
 
 	@Override
 	public void
 	paintComponent (Graphics g)
 	{
+		super.paintComponent(g);
 		g.drawImage(img, 0, 0, null);
 	}
 
