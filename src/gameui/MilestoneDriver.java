@@ -10,7 +10,6 @@ public class MilestoneDriver
 	{
 		SolarDefenderGUI frame = new SolarDefenderGUI();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(1000, 1000);
 	    frame.setVisible(true);
 	}
 

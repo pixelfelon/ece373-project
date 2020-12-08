@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import gameobjects.Entity;
-import gameobjects.Planet;
 import gameobjects.Vec2D;
 
 public abstract class UIEntity

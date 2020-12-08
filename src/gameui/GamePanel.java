@@ -2,6 +2,7 @@ package gameui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,12 +21,14 @@ public class GamePanel extends JPanel
 	private Game game;
 	private boolean running;
 	private Timer simTimer;
+	private Image background;
 
 	private static final int tickMs = 16;
 
 	public
-	GamePanel (Game game)
+	GamePanel (Game game, Image background)
 	{
+		this.background = background;
 		this.entities = new HashSet<UIEntity>();
 		this.game = game;
 		this.running = false;
@@ -54,6 +57,7 @@ public class GamePanel extends JPanel
 	paintComponent (Graphics g)
 	{
 		super.paintComponent(g);
+		g.drawImage(this.background, 0, 0, null);
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
