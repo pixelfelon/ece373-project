@@ -8,7 +8,7 @@ import gameobjects.Entity;
 
 public class UIDefault extends UIEntity {
 
-	public UIDefault(JPanel parent, Entity target) {
+	public UIDefault(GamePanel parent, Entity target) {
 		super(parent, target);
 	}
 

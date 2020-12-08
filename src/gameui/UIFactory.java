@@ -7,7 +7,7 @@ import gameobjects.*;
 public class UIFactory {
 
 	public static UIEntity
-	makeUIEntity (JPanel parent, Entity entity)
+	makeUIEntity (GamePanel parent, Entity entity)
 	{
 		if (Planet.class.isAssignableFrom(entity.getClass()))
 		{

@@ -39,7 +39,7 @@ public class SolarDefenderGUI extends JFrame {
 		private Image background = Toolkit.getDefaultToolkit().getImage("solar_system_background.jpg");
 		//for setMinimum parameter
 		private Dimension screenSize = new Dimension(720, 542); 
-		String[] weapons = {"No Weapon", "Phalanx", "Missile", "RailGun"};
+		String[] weapons = {"No Weapon", "Phalanx", "Missile", "Rail Gun"};
 		
 		//Panels
 		private JPanel mainScreen = new JPanel();
@@ -204,7 +204,7 @@ public class SolarDefenderGUI extends JFrame {
 		
 		private void BuildHighScoresScreen() {
 			
-			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
+			BackgroundImage highScoreBackground = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
 			highScoreScreen.setLayout(null);
 			
 			hsToMain.setBounds(350, 850, 125, 25);
@@ -212,7 +212,7 @@ public class SolarDefenderGUI extends JFrame {
 			hsToMain.addActionListener(new ButtonListener());
 			
 			highScoreScreen.add(hsToMain);
-			difficultyScreen.add(panel);
+			highScoreScreen.add(highScoreBackground);
 			this.pack();
 			
 		}

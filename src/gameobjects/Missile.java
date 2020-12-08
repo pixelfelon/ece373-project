@@ -7,5 +7,6 @@ public class Missile extends Weapon {
 		damage = 2;
 		attackSpeed = 2;
 		range = 2;
+		fireTime = reloadTimer - 2;
 	}
 }

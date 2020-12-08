@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import gameobjects.Entity;
+import gameobjects.Game;
 import gameobjects.Planet;
 import gameobjects.Vec2D;
 
@@ -17,12 +18,12 @@ public abstract class UIEntity
 {
 
 	protected Entity target;
-	protected JPanel parent;
+	protected GamePanel parent;
 	protected BufferedImage image;
 	double offSetX, offSetY;
 
 	public
-	UIEntity (JPanel parent, Entity target)
+	UIEntity (GamePanel parent, Entity target)
 	{
 		this.target = target;
 		this.parent = parent;
@@ -88,4 +89,5 @@ public abstract class UIEntity
 		Point2D e = this.convertCoords(ve);
 		g.draw(new Line2D.Double(p.getX(), p.getY(), e.getX(), e.getY()));
 	}
+	
 }

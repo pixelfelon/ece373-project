@@ -130,5 +130,7 @@ public class GamePanel extends JPanel
 			//this.stopSimulation();
 		}
 	}
-
+	public Game getGame() {
+		return game;
+	}
 }

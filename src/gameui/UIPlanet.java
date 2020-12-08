@@ -18,13 +18,15 @@ import gameobjects.Vec2D;
 public class UIPlanet extends UIEntity
 {
 
-	//private Planet planet;
+	private double fireTime;
+	private double attackSpeed;
+	double randomNum = ThreadLocalRandom.current().nextDouble(0.5) + 0.1;
 	
 	public
-	UIPlanet (JPanel parent, Planet target)
+	UIPlanet (GamePanel parent, Planet target)
 	{
 		super(parent, target);
-		//planet = target;
+		
 		try
 		{
 			switch (target.spriteIdx)
@@ -77,15 +79,30 @@ public class UIPlanet extends UIEntity
 			g.setStroke(new BasicStroke(1));
 			g.setColor(Color.PINK);
 			
-//			if(((Planet)(this.target)).getWeapon() != null) {
-//				if(((Planet)(this.target)).getWeapon().getRange() == 0) {g.setColor(Color.WHITE);}
-//				else if(((Planet)(this.target)).getWeapon().getRange() == 1) {g.setColor(Color.ORANGE);}
-//				else if(((Planet)(this.target)).getWeapon().getRange() == 2) {g.setColor(Color.YELLOW);}
-//				else if(((Planet)(this.target)).getWeapon().getRange() == 3) {g.setColor(Color.CYAN);}
-//			}
+			if(((Planet)(this.target)).getWeapon() != null) {
+				if(((Planet)(this.target)).getWeapon().getRange() == 0) {g.setColor(Color.WHITE);}
+				else if(((Planet)(this.target)).getWeapon().getRange() == 1) {
+					g.setColor(Color.YELLOW);
+					attackSpeed = 0.2;
+					fireTime = 0.1;
+					}
+				else if(((Planet)(this.target)).getWeapon().getRange() == 2) {
+					g.setColor(Color.RED);
+					attackSpeed = 2;
+					fireTime = 2;
+					}
+				else if(((Planet)(this.target)).getWeapon().getRange() == 3) {
+					g.setColor(Color.CYAN);
+					g.setStroke(new BasicStroke(5));
+					attackSpeed = 3 - randomNum;
+					fireTime = 0.8 + randomNum;
+					}
+			}
 			
 			if(((Planet)(this.target)).findClosestEnemy() != null) {
+				if ((((System.nanoTime() / 1000000000.0) % attackSpeed) < fireTime)) {
 			this.drawLine(g, this.target.getPosition(), ((Planet)(this.target)).findClosestEnemy().getPosition());
+				}
 			}
 		}
 	}
