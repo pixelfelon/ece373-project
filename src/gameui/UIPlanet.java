@@ -3,28 +3,22 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import gameobjects.NoWeapon;
 import gameobjects.Planet;
 import gameobjects.Vec2D;
 
 public class UIPlanet extends UIEntity
 {
-
-	//private Planet planet;
 	
 	public
 	UIPlanet (JPanel parent, Planet target)
 	{
 		super(parent, target);
-		//planet = target;
 		try
 		{
 			switch (target.spriteIdx)

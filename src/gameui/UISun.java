@@ -3,6 +3,7 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -10,18 +11,25 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import gameobjects.Star;
 import gameobjects.Vec2D;
 
-public class UISun extends UIEntity
+public class UISun extends UIEntity 
 {
 
 	private BufferedImage liveSun;
 	private BufferedImage deadSun;
 	private BufferedImage heart;
-	private BufferedImage gameOver;
+	private HighScores  highScore = new HighScores();
+	//private BufferedImage gameOver;
+	ImageIcon gameOver = new ImageIcon(".\\Graphics\\game_over.gif");
+	private JLabel	gameOverGIF = new JLabel(gameOver);
 	
 	public
 	UISun (JPanel parent, Star target)
@@ -32,7 +40,7 @@ public class UISun extends UIEntity
 			liveSun = ImageIO.read( new File(".\\Graphics\\sun.png"));
 			deadSun = ImageIO.read( new File(".\\Graphics\\deadsun.png"));
 			heart = ImageIO.read( new File(".\\Graphics\\heart.png"));
-			gameOver = ImageIO.read( new File(".\\Graphics\\game_over.gif"));
+			//gameOver = ImageIO.read( new File(".\\Graphics\\game_over.gif"));
 			offSetX = 40;
 			offSetY = 40;
 		}
@@ -55,7 +63,28 @@ public class UISun extends UIEntity
 		else
 		{
 			g.drawImage(deadSun, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
-			g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
+			//g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
+			gameOverGIF.setBounds((int)sh.getX() - (int)100, (int)sh.getY() + 25, 275, 35);
+			parent.add(gameOverGIF);
+			
+			
+		    JTextField newName = new JTextField(10);
+			
+			JPanel myPanel = new JPanel(new GridLayout(2, 1));
+		    myPanel.add(new JLabel("Enter Name"));
+		    myPanel.add(newName);
+		    
+		    int result = JOptionPane.showConfirmDialog(null, myPanel, "NEW HIGH SCORE!", JOptionPane.OK_OPTION);
+		    
+			if(result == JOptionPane.OK_OPTION) {
+				
+				highScore.setScore(150);
+				highScore.setName(newName.getText());
+
+			}
+			
+			HighScores.saveData(highScore);
+		    
 			
 		}
 		g.drawImage(heart, (int)sh.getX() - 30, (int)sh.getY() - 20, null);
