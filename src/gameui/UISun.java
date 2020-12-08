@@ -55,7 +55,7 @@ public class UISun extends UIEntity
 		else
 		{
 			g.drawImage(deadSun, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
-			g.drawImage(gameOver, (int)sh.getX() - (int)137.5, (int)sh.getY() + 25, null);
+			g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
 			
 		}
 		g.drawImage(heart, (int)sh.getX() - 30, (int)sh.getY() - 20, null);

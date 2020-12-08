@@ -55,6 +55,9 @@ public class SolarDefenderGUI extends JFrame {
 		private JButton hsButton = new JButton("High Scores");
 		private JButton eButton = new JButton("Exit");
 		
+		//High Scores Screen
+		private JButton hsToMain = new JButton("< Back");
+		
 		//Difficulty Screen
 		private JButton easyButton = new JButton("Easy");
 		private JButton medButton = new JButton("Medium");
@@ -128,6 +131,7 @@ public class SolarDefenderGUI extends JFrame {
 		    BuildDiffScreen();
 		    BuildPlanetSelectScreen();
 		    BuildGameScreen();
+		    BuildHighScoresScreen();
 		    //getContentPane().setLayout(new BorderLayout());
 		    changePanel("MAIN");
 		}
@@ -196,6 +200,21 @@ public class SolarDefenderGUI extends JFrame {
 		    difficultyScreen.add(mainMenuButton);
 		    difficultyScreen.add(panel);
 		    this.pack();
+		}
+		
+		private void BuildHighScoresScreen() {
+			
+			BackgroundImage panel = new BackgroundImage(new ImageIcon(".\\Graphics\\space_background.jpg").getImage());
+			highScoreScreen.setLayout(null);
+			
+			hsToMain.setBounds(350, 850, 125, 25);
+			
+			hsToMain.addActionListener(new ButtonListener());
+			
+			highScoreScreen.add(hsToMain);
+			difficultyScreen.add(panel);
+			this.pack();
+			
 		}
 		
 		private void BuildPlanetSelectScreen() {
@@ -331,7 +350,7 @@ public class SolarDefenderGUI extends JFrame {
 				}
 				else if(e.getSource().equals(hsButton))
 				{
-					//changePanel("HIGHSCORES");
+					changePanel("HIGHSCORES");
 				}
 				else if(e.getSource().equals(eButton))
 				{
@@ -358,6 +377,12 @@ public class SolarDefenderGUI extends JFrame {
 					game.setDifficulty(GameDifficulty.HARD);
 					changePanel("PLANETS");
 				}
+				
+				//High Score Screen
+				else if(e.getSource().equals(hsToMain)) {
+					changePanel("MAIN");
+				}
+				
 				//Planet Select Screen
 				else if(e.getSource() == planet1Radio) {
 					if (planet1Radio.isSelected()) {
