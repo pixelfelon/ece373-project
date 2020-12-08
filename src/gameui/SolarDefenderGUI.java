@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -202,10 +203,17 @@ public class SolarDefenderGUI extends JFrame
 	buildHighScoresScreen ()
 	{
 		highScoreScreen.setLayout(null);
-		hsToMain.setBounds(350, 850, 125, 25);
+		
+		JLabel scores = new JLabel();
+		scores.setText("Score: 555 Name: ");
+		scores.setForeground(Color.GREEN);
+		scores.setFont(new Font("Serif", Font.PLAIN, 25));
+		scores.setBounds(400, 250, 500, 25);
+		highScoreScreen.add(scores);
+		
+		hsToMain.setBounds(0, 0, 125, 25);
 		hsToMain.addActionListener(new ButtonListener());
 		highScoreScreen.add(hsToMain);
-
 	}
 
 	private void
