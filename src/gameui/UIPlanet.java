@@ -93,9 +93,12 @@ public class UIPlanet extends UIEntity
 					g.setStroke(new BasicStroke(5));
 					attackSpeed = 3 - randomNum;
 					fireTime = 0.8 + randomNum;
+					
+						}
 					}
 			}
 			
+		if(((Planet)this.target).getWeapon().getFiring()){
 			if(((Planet)(this.target)).findClosestEnemy() != null) {
 				if ((((System.nanoTime() / 1000000000.0) % attackSpeed) < fireTime)) {
 			this.drawLine(g, this.target.getPosition(), ((Planet)(this.target)).findClosestEnemy().getPosition());
