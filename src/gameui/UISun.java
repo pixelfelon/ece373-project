@@ -64,9 +64,12 @@ public class UISun extends UIEntity
 			if (((System.nanoTime() / 1000000000.0) % 1.0) < 0.5) { 
 				// this block only runs in the lower half of each passing second }
 				g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
+				
+				SolarDefenderGUI.viewScores.setVisible(true);
 			}
 //			gameOverGIF.setBounds((int)sh.getX() - (int)100, (int)sh.getY() + 25, 275, 35);
 //			parent.add(gameOverGIF);
+			
 		}
 		g.drawImage(heart, (int)sh.getX() - 30, (int)sh.getY() - 20, null);
 		Stroke stroke1 = new BasicStroke(12f);
