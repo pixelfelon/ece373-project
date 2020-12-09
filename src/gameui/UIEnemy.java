@@ -1,7 +1,6 @@
 package gameui;
 
 import java.awt.Graphics2D;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,13 +21,13 @@ public class UIEnemy extends UIEntity
 			switch (randomNum)
 			{
 			case 1:
-				image = ImageIO.read( new File(".\\Graphics\\enemy1.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/enemy1.png"));
 				break;
 			case 2:
-				image = ImageIO.read( new File(".\\Graphics\\enemy2.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/enemy2.png"));
 				break;
 			case 3:
-				image = ImageIO.read( new File(".\\Graphics\\enemy3.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/enemy3.png"));
 				break;
 			}
 		}

@@ -3,6 +3,7 @@ package gameui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -20,7 +21,7 @@ public class WeaponSelector extends JPanel {
 	private static final int minHeight = 50;
 
 	public
-	WeaponSelector (String iconPath, String name, String[] weapons)
+	WeaponSelector (URL iconPath, String name, String[] weapons)
 	{
 		this.icon = new ImageIcon(iconPath);
 		this.iconLabel = new JLabel(this.icon);

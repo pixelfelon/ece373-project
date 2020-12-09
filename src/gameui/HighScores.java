@@ -1,6 +1,7 @@
 package gameui;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -87,14 +88,18 @@ public class HighScores implements Serializable {
 			objIn.close();
 			fileIn.close();
 		}
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e)
+		{
+			return new HighScores();
+		}
 		catch(IOException i)
 		{
 			i.printStackTrace();
 		} 
-		catch (ClassNotFoundException e) 
-		{
-			e.printStackTrace();
-		}  
 		
 		return highScore;
 	}

@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -31,10 +30,10 @@ public class UISun extends UIEntity
 		super(parent, target);
 		try
 		{
-			liveSun = ImageIO.read( new File(".\\Graphics\\sun.png"));
-			deadSun = ImageIO.read( new File(".\\Graphics\\deadsun.png"));
-			heart = ImageIO.read( new File(".\\Graphics\\heart.png"));
-			gameOver = ImageIO.read( new File(".\\Graphics\\game_over.gif"));
+			liveSun = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/sun.png"));
+			deadSun = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/deadsun.png"));
+			heart = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/heart.png"));
+			gameOver = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/game_over.gif"));
 			offSetX = 40;
 			offSetY = 40;
 			score = 0;
@@ -50,8 +49,8 @@ public class UISun extends UIEntity
 	update (Graphics2D g)
 	{
 		Point2D center = this.convertCoords(this.target.getPosition());
-		Point2D sh = this.convertCoords(new Vec2D(-.08, .95));
-		Point2D scoreCounter = this.convertCoords(new Vec2D(.08, .95));
+		Point2D sh = this.convertCoords(new Vec2D(-.16, .95));
+		Point2D scoreCounter = this.convertCoords(new Vec2D(.16, .95));
 		if (((Star)(this.target)).getHealth() > 0)
 		{
 			g.drawImage(liveSun, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);

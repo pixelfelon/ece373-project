@@ -3,7 +3,6 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -29,22 +28,22 @@ public class UIPlanet extends UIEntity
 			switch (target.spriteIdx)
 			{
 			case 1:
-				image = ImageIO.read( new File(".\\Graphics\\planet1.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet1.png"));
 				break;
 			case 2:
-				image = ImageIO.read( new File(".\\Graphics\\planet2.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet2.png"));
 				break;
 			case 3:
-				image = ImageIO.read( new File(".\\Graphics\\planet3.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet3.png"));
 				break;
 			case 4:
-				image = ImageIO.read( new File(".\\Graphics\\planet4.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet4.png"));
 				break;
 			case 5:
-				image = ImageIO.read( new File(".\\Graphics\\planet5.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet5.png"));
 				break;
 			case 6:
-				image = ImageIO.read( new File(".\\Graphics\\planet6.png"));
+				image = ImageIO.read(this.getClass().getClassLoader().getResource("Graphics/planet6.png"));
 				break;
 			default:
 				System.err.printf("Could not find planet sprite for choice %d!\n", target.spriteIdx);

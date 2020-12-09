@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,13 +43,13 @@ public class SolarDefenderGUI extends JFrame
 		private Game game = new Game();
 		String[] weapons = {"No Weapon", "Phalanx", "Missile", "Rail Gun"};
 		private final int maxPlanets = 6;
-		private final String[] planetIcons = {
-			".\\Graphics\\planet1.png",
-			".\\Graphics\\planet2.png",
-			".\\Graphics\\planet3.png",
-			".\\Graphics\\planet4.png",
-			".\\Graphics\\planet5.png",
-			".\\Graphics\\planet6.png"
+		private final URL[] planetIcons = {
+			this.getClass().getClassLoader().getResource("Graphics/planet1.png"),
+			this.getClass().getClassLoader().getResource("Graphics/planet2.png"),
+			this.getClass().getClassLoader().getResource("Graphics/planet3.png"),
+			this.getClass().getClassLoader().getResource("Graphics/planet4.png"),
+			this.getClass().getClassLoader().getResource("Graphics/planet5.png"),
+			this.getClass().getClassLoader().getResource("Graphics/planet6.png")
 		};
 		private final String[] planetNames = {
 			"Uleturn",
@@ -63,7 +64,7 @@ public class SolarDefenderGUI extends JFrame
 
 		// Panels
 		private CardLayout layout = new CardLayout();
-		private Image spaceBG = new ImageIcon(".\\Graphics\\space_background.jpg").getImage();
+		private Image spaceBG = new ImageIcon(this.getClass().getClassLoader().getResource("Graphics/space_background.jpg")).getImage();
 		private JPanel mainScreen = new BackgroundImage(spaceBG);
 		private JPanel difficultyScreen = new BackgroundImage(spaceBG);
 		private	JPanel planetSelectScreen = new BackgroundImage(spaceBG);
@@ -71,7 +72,7 @@ public class SolarDefenderGUI extends JFrame
 		private JPanel highScoreScreen = new BackgroundImage(spaceBG);
 
 		// Main Screen
-		ImageIcon titleIcon = new ImageIcon(".\\Graphics\\solar_defender_title.gif");
+		ImageIcon titleIcon = new ImageIcon(this.getClass().getClassLoader().getResource("Graphics/solar_defender_title.gif"));
 		private JLabel	titleGIF = new JLabel(titleIcon);
 		private JButton sButton = new JButton("Start Game");
 		private JButton hsButton = new JButton("High Scores");
