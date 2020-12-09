@@ -7,6 +7,7 @@ public class RailGun extends Weapon {
 		damage = 3;
 		attackSpeed = 1;
 		range = 3;
+		fireTime = reloadTimer - 0.8;
 	}
 
 }

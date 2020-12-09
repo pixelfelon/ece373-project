@@ -7,24 +7,36 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 
 public class HighScores implements Serializable {
 	
-	private ArrayList<Integer> score;
-	private ArrayList<String> name;
+	//private ArrayList<Integer> score;
+	//private ArrayList<String> name;
+	private HashMap<Integer, String> map;
+	//TreeMap<Integer, String> sortedScores;
 	
 	public HighScores() {
-		score = new ArrayList<Integer>();
-		name = new ArrayList<String>();
+	//	score = new ArrayList<Integer>();
+	//	name = new ArrayList<String>();
+		map = new HashMap<Integer, String>();
+		//sortedScores = new TreeMap<>(sortedScores);
 	}
 	
-	public void setScore(int score) {
+/*	public void setScore(int score) {
 		this.score.add(score);
 	}
 	
 	public void setName(String name) {
 		this.name.add(name);
+	}
+	*/
+	public void sortScores(int score, String name) {
+		
+		map.put(score, name);
+
 	}
 	
 	public static void saveData(HighScores highScore) {
@@ -76,8 +88,20 @@ public class HighScores implements Serializable {
 	
 	public void printScores() {
 		
+		/*System.out.print("<html>");
+		
 		for(int i = 0; i < score.size(); i++) {
-			System.out.println("Score: " + score.get(i) + " Name: " + name.get(i));
+			if(i <= 10) {
+			System.out.print((i + 1) + " Name: " + name.get(i) + " | Score: " + score.get(i) + "<br>");
+			}
+		}
+		
+		System.out.print("</html>");*/
+		
+		TreeMap<Integer, String> sortedScores = new TreeMap<>(map);
+		
+		if(sortedScores.size() != 0) {
+		System.out.println(sortedScores);
 		}
 		
 	}

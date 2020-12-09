@@ -8,7 +8,9 @@ public abstract class Weapon {
 	protected int reloadTimer = 0;
 	protected double range;
 	private Enemy target;
-
+	boolean firing;
+	protected double fireTime;
+	
 	public Weapon() {}
 
 	public void setName(String name) {
@@ -58,13 +60,23 @@ public abstract class Weapon {
 				}
 				else {
 					target.dealDamage(this.getDamage());
+					firing = true;
 				}
 			}
 			this.reloadTimer = 12;
 		}
 		else {
 			this.reloadTimer = this.reloadTimer - this.attackSpeed;
+			if(this.reloadTimer > this.fireTime) {
+				firing = true;
+			}
+			else {
+				firing = false;
+			}
 		}
+	}
+	public boolean getFiring() {
+		return firing;
 	}
 	
 }

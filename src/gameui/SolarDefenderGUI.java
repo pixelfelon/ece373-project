@@ -14,6 +14,10 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,6 +31,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import gameobjects.Game;
 import gameobjects.GameDifficulty;
@@ -38,7 +43,7 @@ import gameobjects.RailGun;
 import gameobjects.Weapon;
 
 
-public class SolarDefenderGUI extends JFrame 
+public class SolarDefenderGUI extends JFrame
 {
 
 	private Game game = new Game();
@@ -88,6 +93,7 @@ public class SolarDefenderGUI extends JFrame
 
 	//Game Screen
 	private JButton pauseMenuButton = new JButton("Menu");
+	static JButton viewScores = new JButton("Did you get a high Score?");
 	private GamePanel gamePanel = new GamePanel(this.game, spaceBG);
 
 	//General Buttons
@@ -113,6 +119,8 @@ public class SolarDefenderGUI extends JFrame
 	Planet planet5 = new Planet(0.3 + 0.5 * (4.0 / 5.0));
 	Planet planet6 = new Planet(0.3 + 0.5 * (5.0 / 5.0));
 	Weapon weapon1 = null;
+	
+	private HighScores highScore = new HighScores();
 
 	public
 	SolarDefenderGUI ()
@@ -133,7 +141,9 @@ public class SolarDefenderGUI extends JFrame
 		planet4.spriteIdx = 4;
 		planet5.spriteIdx = 5;
 		planet6.spriteIdx = 6;
-
+		
+		HighScores.saveData(highScore);
+		
 		buildMainScreen();
 		buildDiffScreen();
 		buildPlanetSelectScreen();
@@ -149,6 +159,8 @@ public class SolarDefenderGUI extends JFrame
 		System.out.printf("main pane H=%d, W=%d\n", this.getContentPane().getHeight(), this.getContentPane().getWidth());
 		System.out.printf("difficultyScreen H=%d, W=%d\n", difficultyScreen.getHeight(), difficultyScreen.getWidth());
 		System.out.printf("mainScreen H=%d, W=%d\n", mainScreen.getHeight(), mainScreen.getWidth());
+		
+		
 	}
 
 	private void
@@ -184,6 +196,7 @@ public class SolarDefenderGUI extends JFrame
 				.addGap(50)
 				.addComponent(eButton, GroupLayout.DEFAULT_SIZE, 25, 50)
 				);
+		
 	}
 
 	private void
@@ -232,34 +245,44 @@ public class SolarDefenderGUI extends JFrame
 		highScoreScreen.setLayout(new GridBagLayout());
 		
 		JPanel content = new JPanel();
-		GridLayout layout = new GridLayout(10, 1);
+		GridLayout layout = new GridLayout(2, 1);
 		content.setLayout(layout);
 		content.setOpaque(false);
 		highScoreScreen.add(content);
 		
 		JPanel scoreScreen = new JPanel();
-		scoreScreen.setOpaque(false);
-		
-		String test = "";
-		
-		//HighScores highScores = null;
-		
-		//highScores = HighScores.loadData();
-		
-		//highScores.printScores();
-		
-		
+		JPanel backButton = new JPanel();
 		JLabel scores = new JLabel();
 		
+		scoreScreen.setOpaque(false);
+		backButton.setOpaque(false);
 		
+	/*	ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(stream);
+
+        PrintStream originalPrintStream = System.out;
+
+        System.setOut(ps);*/
+        
+        highScore = HighScores.loadData();
 		
-		scores.setText(test);
+        if(highScore != null) {
+		highScore.printScores();
+        }
+
+        //set it back
+       /* System.setOut(originalPrintStream);
+        
+        String output = new String(stream.toByteArray());*/
+		
+		//System.out.println(output);
+		
+	/*	scores.setText(output);
 		scores.setForeground(Color.GREEN);
 		scores.setFont(new Font("Serif", Font.PLAIN, 25));
 		
-		scoreScreen.add(scores);
+		scoreScreen.add(scores);*/
 		
-		//highScoreScreen.setLayout(null);
 		
 		Dimension buttonSize = new Dimension(115, 30);
 		Dimension maxSize = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
@@ -267,20 +290,12 @@ public class SolarDefenderGUI extends JFrame
 		hsToMain.setMaximumSize(maxSize);
 		hsToMain.setPreferredSize(buttonSize);
 		
-		
 		hsToMain.addActionListener(new ButtonListener());
-		content.add(scoreScreen);
-		content.add(hsToMain);
 		
-		//backButton.add(hsToMain);
-
-		//highScoreScreen.add(scores);
+		backButton.add(hsToMain);
 		
-		/*
-		highScoreScreen.setLayout(null);
-		hsToMain.setBounds(350, 850, 125, 25);
-		hsToMain.addActionListener(new ButtonListener());
-		highScoreScreen.add(hsToMain);*/
+		//content.add(scoreScreen);
+		content.add(backButton);
 
 	}
 
@@ -368,15 +383,51 @@ public class SolarDefenderGUI extends JFrame
 		planetSelectScreen.add(planetToDifficulty);
 		planetSelectScreen.add(planetConfirm);
 	}
-
+	
+	public void 
+	Scores() {
+		
+	
+		JTextField newName = new JTextField(10);
+		
+		JPanel myPanel = new JPanel(new GridLayout(2, 1));
+	    myPanel.add(new JLabel("Enter Name"));
+	    myPanel.add(newName);
+	    
+	    int result = JOptionPane.showConfirmDialog(null, myPanel, "NEW HIGH SCORE!", JOptionPane.OK_OPTION);
+	    
+	    	if(result == JOptionPane.OK_OPTION && newName.getText() != null) {
+			
+			//highScore.setScore(game.getScore());
+			//highScore.setName(newName.getText());
+			highScore.sortScores(game.getScore(), newName.getText());
+	    	}
+		
+		HighScores.saveData(highScore);
+		
+		buildHighScoresScreen();
+		
+		changePanel("HIGHSCORES");
+	
+	}
+	
+	
 	private void
 	buildGameScreen ()
 	{
+
 		gameScreen.setLayout(new BorderLayout());
 		pauseMenuButton.addActionListener(new ButtonListener());
-		pauseMenuButton.setBounds(0, 0, 125, 25);
+		viewScores.addActionListener(new ButtonListener());
+		pauseMenuButton.setBounds(0, 0, 175, 25);
+		
 		gameScreen.add(pauseMenuButton, 0);
+		gameScreen.add(viewScores, BorderLayout.SOUTH);
 		gameScreen.add(gamePanel, 2);
+
+		
+		viewScores.setVisible(false);
+
 	}
 
 	private void
@@ -604,6 +655,16 @@ public class SolarDefenderGUI extends JFrame
 			else if(e.getSource().equals(mainMenuButton))
 			{
 				changePanel("MAIN");
+				if (gamePanel.isRunning())
+				{
+					gamePanel.stopSimulation();
+				}
+			}
+			
+			else if(e.getSource().equals(viewScores))
+			{
+				Scores();
+				//changePanel("HIGHSCORES");
 				if (gamePanel.isRunning())
 				{
 					gamePanel.stopSimulation();

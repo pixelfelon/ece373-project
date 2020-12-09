@@ -3,7 +3,6 @@ package gameui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -11,28 +10,23 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import gameobjects.Star;
 import gameobjects.Vec2D;
 
-public class UISun extends UIEntity 
+public class UISun extends UIEntity
 {
 
 	private BufferedImage liveSun;
 	private BufferedImage deadSun;
 	private BufferedImage heart;
-	private HighScores  highScore = new HighScores();
-	//private BufferedImage gameOver;
-	ImageIcon gameOver = new ImageIcon(".\\Graphics\\game_over.gif");
-	private JLabel	gameOverGIF = new JLabel(gameOver);
+	private BufferedImage gameOver;
+	private int score;
+	//ImageIcon gameOver = new ImageIcon(".\\Graphics\\game_over.gif");
+	//private JLabel	gameOverGIF = new JLabel(gameOver);
 	
 	public
-	UISun (JPanel parent, Star target)
+	UISun (GamePanel parent, Star target)
 	{
 		super(parent, target);
 		try
@@ -40,9 +34,10 @@ public class UISun extends UIEntity
 			liveSun = ImageIO.read( new File(".\\Graphics\\sun.png"));
 			deadSun = ImageIO.read( new File(".\\Graphics\\deadsun.png"));
 			heart = ImageIO.read( new File(".\\Graphics\\heart.png"));
-			//gameOver = ImageIO.read( new File(".\\Graphics\\game_over.gif"));
+			gameOver = ImageIO.read( new File(".\\Graphics\\game_over.gif"));
 			offSetX = 40;
 			offSetY = 40;
+			score = 0;
 		}
 		catch (IOException e)
 		{
@@ -56,35 +51,24 @@ public class UISun extends UIEntity
 	{
 		Point2D center = this.convertCoords(this.target.getPosition());
 		Point2D sh = this.convertCoords(new Vec2D(-.08, .95));
+		Point2D scoreCounter = this.convertCoords(new Vec2D(.08, .95));
 		if (((Star)(this.target)).getHealth() > 0)
 		{
 			g.drawImage(liveSun, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
+			score += (int)this.parent.getGame().getDifficulty().getEnemyRate();
+			this.parent.getGame().setScore(score);
 		}
 		else
 		{
 			g.drawImage(deadSun, (int)center.getX() - (int)offSetX, (int)center.getY() - (int)offSetY, null);
-			//g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
-			gameOverGIF.setBounds((int)sh.getX() - (int)100, (int)sh.getY() + 25, 275, 35);
-			parent.add(gameOverGIF);
-			
-			
-		    JTextField newName = new JTextField(10);
-			
-			JPanel myPanel = new JPanel(new GridLayout(2, 1));
-		    myPanel.add(new JLabel("Enter Name"));
-		    myPanel.add(newName);
-		    
-		    int result = JOptionPane.showConfirmDialog(null, myPanel, "NEW HIGH SCORE!", JOptionPane.OK_OPTION);
-		    
-			if(result == JOptionPane.OK_OPTION) {
+			if (((System.nanoTime() / 1000000000.0) % 1.0) < 0.5) { 
+				// this block only runs in the lower half of each passing second }
+				g.drawImage(gameOver, (int)sh.getX() - (int)100, (int)sh.getY() + 25, null);
 				
-				highScore.setScore(150);
-				highScore.setName(newName.getText());
-
+				SolarDefenderGUI.viewScores.setVisible(true);
 			}
-			
-			HighScores.saveData(highScore);
-		    
+//			gameOverGIF.setBounds((int)sh.getX() - (int)100, (int)sh.getY() + 25, 275, 35);
+//			parent.add(gameOverGIF);
 			
 		}
 		g.drawImage(heart, (int)sh.getX() - 30, (int)sh.getY() - 20, null);
@@ -92,7 +76,8 @@ public class UISun extends UIEntity
 		g.setStroke(stroke1);
 		g.setColor(Color.RED);
 		g.drawString("HEALTH " + ((Star)(this.target)).getHealth(), (int)sh.getX(), (int)sh.getY());
-		System.out.printf("health %d\n", ((Star)(this.target)).getHealth());
+		g.setColor(Color.WHITE);
+		g.drawString("SCORE: " + this.parent.getGame().getScore(), (int)scoreCounter.getX(), (int)scoreCounter.getY());
 	}
 
 }

@@ -7,6 +7,8 @@ import java.util.Collections;
 
 public class Game {
 
+	private int score;
+	
 	private HashSet<Entity> entities;
 	private HashSet<Entity> newEntities;
 	private HashSet<Enemy> enemies;
@@ -28,6 +30,7 @@ public class Game {
 	}
 	
 	public Game(GameDifficulty difficulty) {
+		this.score = 0;
 		this.difficulty = difficulty;
 		this.viewportWidth = 500;
 		this.viewportHeight = 500;
@@ -65,7 +68,12 @@ public class Game {
 	public void playGame() {
 		
 	}
-
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public int getScore() {
+		return score;
+	}
 	public HashSet<Entity> getEntities() {
 		return this.entities;
 	}
@@ -152,7 +160,7 @@ public class Game {
 	private void spawnEnemy() {
 		//speed needs adjusting
 		double speedMin = 0.1;
-		double speedMax = 0.2;
+		double speedMax = 0.15;
 
 		// starting position is at random point on a circle slightly larger than the viewport
 		Vec2D startPos = new Vec2D();
