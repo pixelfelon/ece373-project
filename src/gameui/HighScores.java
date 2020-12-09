@@ -7,37 +7,52 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 
 public class HighScores implements Serializable {
 	
-	//private ArrayList<Integer> score;
-	//private ArrayList<String> name;
+	private static final long serialVersionUID = 4482698393932138605L;
 	private HashMap<Integer, String> map;
-	//TreeMap<Integer, String> sortedScores;
 	
 	public HighScores() {
-	//	score = new ArrayList<Integer>();
-	//	name = new ArrayList<String>();
 		map = new HashMap<Integer, String>();
-		//sortedScores = new TreeMap<>(sortedScores);
 	}
 	
-/*	public void setScore(int score) {
-		this.score.add(score);
-	}
 	
-	public void setName(String name) {
-		this.name.add(name);
-	}
-	*/
 	public void sortScores(int score, String name) {
 		
 		map.put(score, name);
 
 	}
+	
+	public boolean isTopTen(int score) {
+		boolean isTopTen = false;
+		int i = 1;
+		
+		TreeMap<Integer, String> sortedScores = new TreeMap<>(Collections.reverseOrder());
+		sortedScores.putAll(map);
+		
+		Set<Integer> currentScores = sortedScores.keySet();
+        
+        for(Integer key : currentScores){
+        	
+        	if(score > key && i <= 10) {
+        	isTopTen = true;
+        	}
+        	
+        	i++;
+        }
+		
+		
+		return isTopTen;
+	}
+	
 	
 	public static void saveData(HighScores highScore) {
 		
@@ -87,22 +102,32 @@ public class HighScores implements Serializable {
 	}
 	
 	public void printScores() {
+			
+		TreeMap<Integer, String> sortedScores = new TreeMap<>(Collections.reverseOrder());
 		
-		/*System.out.print("<html>");
+		sortedScores.putAll(map);
 		
-		for(int i = 0; i < score.size(); i++) {
+		Set<Map.Entry<Integer, String>> entries = sortedScores.entrySet();
+		
+		int i = 1;
+		 System.out.print("<html>");
+		 
+		//using for loop
+		for(Map.Entry<Integer, String> entry : entries){
+			
 			if(i <= 10) {
-			System.out.print((i + 1) + " Name: " + name.get(i) + " | Score: " + score.get(i) + "<br>");
+		    System.out.println(i + " Name: " + entry.getValue() + " | Score: " + entry.getKey() + "<br>");
 			}
+		    i++;
 		}
 		
-		System.out.print("</html>");*/
-		
-		TreeMap<Integer, String> sortedScores = new TreeMap<>(map);
-		
-		if(sortedScores.size() != 0) {
-		System.out.println(sortedScores);
+		while(i <= 10) {
+			System.out.println(i + " Name: Unknown | Score: ### <br>");
+			i++;
 		}
+		
+		System.out.print("</html>");
+		
 		
 	}
 
