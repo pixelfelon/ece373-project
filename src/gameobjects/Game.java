@@ -208,6 +208,12 @@ public class Game {
 	}
 
 	public void
+	resetDT ()
+	{
+		this.lastNanos = System.nanoTime();
+	}
+
+	public void
 	tick ()
 	{
 		this.pruneEntities();

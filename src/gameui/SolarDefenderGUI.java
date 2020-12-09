@@ -4,20 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.Serializable;
-import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,13 +19,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Group;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import gameobjects.Game;
@@ -41,7 +33,6 @@ import gameobjects.NoWeapon;
 import gameobjects.Phalanx;
 import gameobjects.Planet;
 import gameobjects.RailGun;
-import gameobjects.Weapon;
 
 
 public class SolarDefenderGUI extends JFrame
@@ -101,6 +92,7 @@ public class SolarDefenderGUI extends JFrame
 
 		// Game Screen
 		private JButton pauseMenuButton = new JButton("Menu");
+		private JButton pauseGameButton = new JButton("Pause");
 		private GamePanel gamePanel = new GamePanel(this.game, spaceBG);
 	
 	
@@ -360,10 +352,13 @@ public class SolarDefenderGUI extends JFrame
 
 		gameScreen.setLayout(new BorderLayout());
 		pauseMenuButton.addActionListener(new ButtonListener());
+		pauseGameButton.addActionListener(new ButtonListener());
 		viewScores.addActionListener(new ButtonListener());
 		pauseMenuButton.setBounds(0, 0, 175, 25);
+		pauseGameButton.setBounds(0, 25, 175, 25);
 		
 		gameScreen.add(pauseMenuButton, 0);
+		gameScreen.add(pauseGameButton, 0);
 		gameScreen.add(viewScores, BorderLayout.SOUTH);
 		gameScreen.add(gamePanel, 2);
 
@@ -441,6 +436,10 @@ public class SolarDefenderGUI extends JFrame
 			{
 				gamePanel.stopSimulation();
 				changePanel("MAIN");
+			}
+			else if(e.getSource().equals(pauseGameButton))
+			{
+				gamePanel.togglePauseSimulation();
 			}
 
 			// High score screen

@@ -94,6 +94,23 @@ public class GamePanel extends JPanel
 		this.repaint();
 	}
 
+	public void
+	togglePauseSimulation ()
+	{
+		if (this.running)
+		{
+			if (this.simTimer.isRunning())
+			{
+				this.simTimer.stop();
+			}
+			else
+			{
+				this.game.resetDT();
+				this.simTimer.start();
+			}
+		}
+	}
+
 	public boolean
 	isRunning ()
 	{
